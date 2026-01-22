@@ -3,187 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Directorio Inteligente de Negocios en Acapulco</title>
+    <title>Directorio de Comercios en Acapulco</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #0f172a; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; scroll-behavior: smooth; }
         
-        /* BANNER BAHÍA DE ACAPULCO */
+        :root {
+            --midnight-blue: #0f172a;
+            --elegant-gold: #c5a059;
+        }
+
         .gradient-header {
-            background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)),
+            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7)),
                         url('https://images.unsplash.com/photo-1589828914726-278438e35074?q=80&w=1920');
-            background-size: cover; background-position: center; min-height: 600px;
+            background-size: cover; background-position: center; min-height: 700px;
         }
 
-        /* TARJETAS PROFESIONALES */
         .business-card {
-            background: white; border-radius: 20px; border: 1px solid #e2e8f0;
-            transition: all 0.3s ease; position: relative; overflow: hidden;
-            display: flex; flex-direction: column;
+            background: white; border-radius: 24px; border: 1px solid #e2e8f0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            position: relative; overflow: hidden; display: flex; flex-direction: column;
         }
-        .business-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #3b82f6; }
+        .business-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.1); border-color: var(--elegant-gold); }
 
-        /* WIDGET CLIMA Y FECHA (GLASSMORPHISM) */
+        .business-desc {
+            font-size: 0.95rem; line-height: 1.7; color: #334155;
+            min-height: 95px; margin-bottom: 2rem;
+            display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+        }
+
         .weather-badge {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 15px;
         }
 
-        /* ANIMACIÓN PERSONAJE SOLECITO */
-        @keyframes float-character {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(3deg); }
+        .privacy-box {
+            background: white; border-top: 4px solid var(--elegant-gold);
+            border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
-        .character-container { animation: float-character 4s ease-in-out infinite; transition: all 0.3s ease; }
-        .character-container:hover { transform: scale(1.1); filter: brightness(1.1); }
-        
-        .speech-bubble { opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
-        .group:hover .speech-bubble { opacity: 1; transform: translateY(0px); }
 
-        .btn-cat { transition: all 0.3s ease; font-weight: 800; }
-        .btn-cat:hover { transform: translateY(-2px); box-shadow: 0 10px 15px rgba(0,0,0,0.2); }
+        .btn-category {
+            transition: all 0.3s ease; text-transform: uppercase;
+            font-size: 0.65rem; font-weight: 800; letter-spacing: 1px;
+            border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .btn-category:hover { transform: translateY(-3px) scale(1.05); filter: brightness(1.1); }
     </style>
 </head>
 <body>
 
-    <div id="modalQR" class="fixed inset-0 z-[500] hidden flex items-center justify-center p-6 bg-slate-900/90 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-xs rounded-3xl p-8 text-center shadow-2xl">
-            <h3 id="qrNombre" class="text-lg font-bold text-slate-900 mb-4 uppercase">Negocio</h3>
-            <div class="bg-slate-50 p-4 rounded-2xl inline-block mb-6 border">
-                <img id="qrImagen" src="" alt="QR" class="w-40 h-40 mx-auto">
-            </div>
-            <button onclick="cerrarQR()" class="w-full py-3 bg-slate-900 text-white rounded-xl font-bold text-xs uppercase">Cerrar</button>
+    <div id="modalQR" class="fixed inset-0 z-[500] hidden flex items-center justify-center p-6 bg-slate-900/95 backdrop-blur-md">
+        <div class="bg-white w-full max-w-xs rounded-[2rem] p-10 text-center shadow-2xl border-2 border-slate-100">
+            <h3 id="qrNombre" class="text-xl font-bold text-slate-900 mb-4 uppercase">Negocio</h3>
+            <div class="bg-slate-50 p-6 rounded-2xl inline-block mb-8 border border-slate-100"><img id="qrImagen" src="" alt="QR" class="w-44 h-44 mx-auto"></div>
+            <button onclick="cerrarQR()" class="w-full py-4 bg-slate-900 text-white rounded-xl font-bold text-sm uppercase tracking-widest">Cerrar</button>
         </div>
     </div>
 
-    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 px-6 py-4">
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 px-8 py-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center text-black">
             <div class="flex items-center gap-3">
-                <div class="bg-blue-900 p-2 rounded-lg text-white"><i class="fas fa-briefcase"></i></div>
-                <span class="text-xl font-black text-slate-900 uppercase tracking-tight">Guía<span class="text-blue-600">Aca</span> Pro</span>
+                <div class="bg-slate-900 p-2 rounded-lg text-white"><i class="fas fa-briefcase"></i></div>
+                <span class="text-xl font-black text-slate-900 uppercase tracking-tighter">Guía<span class="text-blue-600">Aca</span> Pro</span>
             </div>
-            <a href="https://forms.gle/LekeLGcuVmXxix8VA" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-bold text-xs uppercase transition-all shadow-md">+ Registro</a>
+            <a href="https://forms.gle/LekeLGcuVmXxix8VA" target="_blank" class="bg-slate-900 hover:bg-blue-800 text-white px-6 py-2.5 rounded-xl font-bold text-[10px] uppercase shadow-md transition-all">+ Registrar Mi Negocio</a>
         </div>
     </nav>
 
-    <header class="gradient-header flex items-center justify-center px-6 py-12 text-center text-white relative">
-        <div class="max-w-4xl w-full">
-            <h1 class="text-4xl md:text-5xl font-black mb-8 italic drop-shadow-md uppercase tracking-tighter">Directorio Inteligente de <span class="text-blue-400">Negocios en Acapulco</span></h1>
+    <header class="gradient-header flex flex-col items-center justify-center px-6 py-12 text-center text-white relative">
+        <div class="max-w-5xl w-full">
             
-            <div class="relative max-w-xl mx-auto mb-8">
-                <input type="text" id="inputBusqueda" placeholder="¿Qué negocio o sitio buscas?" class="w-full py-4 px-12 rounded-xl bg-white text-slate-900 shadow-2xl outline-none focus:ring-4 focus:ring-blue-500/30">
-                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-            </div>
-
-            <div class="max-w-3xl mx-auto weather-badge p-5 mb-10 flex flex-wrap justify-around items-center gap-6 shadow-2xl">
-                <div class="flex items-center gap-4">
-                    <i class="fas fa-calendar-alt text-blue-300 text-2xl"></i>
-                    <div class="text-left">
-                        <p class="text-[9px] uppercase font-black opacity-60 tracking-widest">Hoy es</p>
-                        <p id="fechaText" class="text-sm font-bold">Jueves, 22 Ene</p>
-                    </div>
+            <div class="inline-flex flex-wrap justify-center items-center gap-6 weather-badge px-5 py-2 mb-10 mx-auto">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-calendar-day text-amber-400 text-base"></i>
+                    <p id="fechaText" class="text-[10px] font-bold uppercase tracking-wider">Cargando...</p>
                 </div>
-                <div class="flex items-center gap-4 border-l border-white/10 pl-6">
-                    <i id="climaIcon" class="fas fa-sun text-yellow-400 text-3xl"></i>
-                    <div class="text-left">
-                        <p class="text-[9px] uppercase font-black opacity-60 tracking-widest">Clima actual</p>
-                        <p id="tempText" class="text-sm font-bold">30°C Soleado</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-4 border-l border-white/10 pl-6 hidden md:flex">
-                    <i id="banderaIcon" class="fas fa-flag text-emerald-400 text-2xl"></i>
-                    <div class="text-left">
-                        <p class="text-[9px] uppercase font-black opacity-60 tracking-widest">Seguridad Playa</p>
-                        <p id="playaStatus" class="text-sm font-bold text-emerald-400">Oleaje Tranquilo</p>
-                    </div>
+                <div class="h-3 w-[1px] bg-white/20 hidden md:block"></div>
+                <div class="flex items-center gap-3">
+                    <i id="climaIcon" class="fas fa-sun text-amber-400 text-base"></i>
+                    <p id="tempText" class="text-[10px] font-bold uppercase tracking-wider">30°C Soleado</p>
                 </div>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button onclick="filtrarPorCategoria('Asesoría Contable')" class="btn-cat px-5 py-2.5 rounded-full bg-blue-600 text-white text-[10px] uppercase shadow-lg">Fiscal</button>
-                <button onclick="filtrarPorCategoria('Gastronomía')" class="btn-cat px-5 py-2.5 rounded-full bg-orange-500 text-white text-[10px] uppercase shadow-lg">Comida</button>
-                <button onclick="filtrarPorCategoria('Turismo')" class="btn-cat px-5 py-2.5 rounded-full bg-cyan-500 text-white text-[10px] uppercase shadow-lg">Turismo</button>
-                <button onclick="filtrarPorCategoria('Comercio')" class="btn-cat px-5 py-2.5 rounded-full bg-emerald-600 text-white text-[10px] uppercase shadow-lg">Comercio</button>
-                <button onclick="filtrarPorCategoria('Decoración y Eventos Sociales')" class="btn-cat px-5 py-2.5 rounded-full bg-rose-500 text-white text-[10px] uppercase shadow-lg">Eventos</button>
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-10 italic uppercase tracking-tighter leading-tight drop-shadow-xl">Directorio de <span class="text-amber-400">Comercios</span> en Acapulco</h1>
+
+            <div class="flex flex-wrap justify-center gap-3 mb-10">
+                <button onclick="filtrarPorCategoria('Asesoría Contable')" class="btn-category px-6 py-3 bg-blue-700 text-white">📑 Fiscal</button>
+                <button onclick="filtrarPorCategoria('Gastronomía')" class="btn-category px-6 py-3 bg-orange-500 text-white">🥘 Comida</button>
+                <button onclick="filtrarPorCategoria('Turismo')" class="btn-category px-6 py-3 bg-teal-600 text-white">🏝️ Turismo</button>
+                <button onclick="filtrarPorCategoria('Comercio')" class="btn-category px-6 py-3 bg-emerald-600 text-white">🛍️ Comercio</button>
+                <button onclick="filtrarPorCategoria('Decoración y Eventos Sociales')" class="btn-category px-6 py-3 bg-purple-600 text-white">🎉 Eventos</button>
             </div>
             
+            <div class="relative max-w-2xl mx-auto mb-10 text-black">
+                <input type="text" id="inputBusqueda" placeholder="Buscar negocio o zona..." class="w-full py-5 px-14 rounded-2xl bg-white shadow-2xl outline-none focus:ring-4 focus:ring-blue-500/30 text-base transition-all">
+                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-xl"></i>
+            </div>
+
             <div class="flex justify-center gap-4">
-                <button onclick="mostrarNegocios(negocios)" class="bg-white text-slate-900 px-6 py-3 rounded-xl font-bold text-[10px] uppercase shadow-xl">Ver Todo</button>
-                <button onclick="verFavoritos()" class="bg-rose-600 text-white px-6 py-3 rounded-xl font-bold text-[10px] uppercase shadow-xl">❤️ Mis Favoritos</button>
-                <button onclick="window.open('https://www.google.com/maps/search/playas+y+lugares+de+interes+acapulco', '_blank')" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-[10px] uppercase shadow-xl border border-blue-400">
-                    <i class="fas fa-map-marked-alt mr-2"></i> Playas y Sitios
-                </button>
+                <button onclick="mostrarNegocios(negocios)" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-3 rounded-xl font-bold text-[10px] uppercase transition-all">Ver Todo</button>
+                <button onclick="verFavoritos()" class="bg-rose-600/90 hover:bg-rose-600 text-white px-8 py-3 rounded-xl font-bold text-[10px] uppercase shadow-lg">❤️ Favoritos</button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto -mt-10 px-6 pb-20 relative z-20">
-        <h2 id="currentFilterText" class="bg-slate-900 text-white px-6 py-2 rounded-lg shadow-xl text-[10px] font-black uppercase tracking-[2px] inline-block mb-10 italic">Negocios Destacados</h2>
+    <main class="max-w-7xl mx-auto -mt-16 px-8 pb-20 relative z-20 text-black">
+        <div class="flex justify-between items-center mb-12">
+            <h2 id="currentFilterText" class="bg-slate-900 text-white px-10 py-3 rounded-xl shadow-2xl text-[10px] font-black uppercase tracking-[3px] italic">Negocios Destacados</h2>
+            <button onclick="window.open('https://www.google.com/maps/search/playas+y+lugares+de+interes+acapulco', '_blank')" class="px-8 py-3 bg-amber-500 text-white rounded-xl font-bold text-[10px] uppercase shadow-xl hover:bg-amber-600 transition-all">Ver Playas y Sitios</button>
+        </div>
         <div id="contenedorNegocios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
     </main>
 
-    <section class="max-w-7xl mx-auto px-6 mb-12">
-        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 border-t-4 border-t-blue-600 text-black">
-            <h3 class="text-lg font-black text-slate-900 uppercase tracking-tight mb-4">Aviso de Privacidad Profesional</h3>
-            <p class="text-slate-600 text-sm leading-relaxed italic text-black font-medium">Este sitio es parte de un proyecto de Tesis Profesional. Los datos de los comercios son públicos para fines de vinculación turística y fomento a la formalidad fiscal en Acapulco de Juárez, Guerrero.</p>
+    <section class="max-w-7xl mx-auto px-8 mb-24 text-black">
+        <div class="privacy-box p-12 text-slate-800">
+            <div class="flex items-center gap-4 mb-8">
+                <i class="fas fa-file-shield text-3xl text-slate-900"></i>
+                <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tight">Aviso de Privacidad Profesional</h3>
+            </div>
+            <div class="grid md:grid-cols-2 gap-12 text-slate-600 leading-relaxed text-sm mb-12">
+                <div>
+                    <p class="font-bold text-slate-900 mb-3 uppercase tracking-wider text-xs border-b border-slate-100 pb-2">Propósito Académico</p>
+                    <p class="italic">Este sitio web es parte integral de un proyecto de <strong>Tesis Profesional</strong>. Los datos contenidos tienen como único fin la vinculación comercial y la asesoría en materia contable y fiscal para los negocios de Acapulco de Juárez, Guerrero.</p>
+                </div>
+                <div>
+                    <p class="font-bold text-slate-900 mb-3 uppercase tracking-wider text-xs border-b border-slate-100 pb-2">Protección de Datos</p>
+                    <p>La información es proporcionada voluntariamente por los comercios. Para solicitar la actualización, rectificación o eliminación de cualquier dato registrado, favor de contactar a través de los canales institucionales del proyecto.</p>
+                </div>
+            </div>
+            
+            <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm text-slate-900 border border-slate-100"><i class="fas fa-envelope-open-text text-xl"></i></div>
+                    <div>
+                        <h4 class="font-black text-slate-900 text-xs uppercase tracking-widest">Soporte del Administrador</h4>
+                        <p class="text-[11px] text-slate-500 italic">¿Deseas reportar un problema o registrarte?</p>
+                    </div>
+                </div>
+                <a href="mailto:acasoporte.pc@gmail.com" class="bg-slate-900 text-white px-8 py-3 rounded-xl font-bold text-[10px] uppercase shadow-lg hover:bg-blue-800 transition-all flex items-center gap-2">
+                    <i class="fas fa-paper-plane"></i> Enviar Correo
+                </a>
+            </div>
         </div>
     </section>
 
-    <footer class="bg-white border-t border-slate-200 py-12 text-center text-black">
-        <p class="text-slate-900 font-bold text-xs uppercase tracking-widest text-black">© 2026 Directorio Inteligente de Negocios en Acapulco</p>
+    <footer class="bg-slate-950 py-12 text-center border-t-4 border-amber-500 text-white">
+        <p class="font-bold text-xs uppercase tracking-[4px] mb-2">© 2026 Directorio de Comercios en Acapulco</p>
+        <p class="text-slate-500 text-[9px] uppercase font-bold tracking-widest">Acapulco de Juárez, Guerrero, México</p>
     </footer>
 
-    <div id="chatBtnContainer" onclick="toggleChat()" class="fixed bottom-8 right-8 z-[300] cursor-pointer group">
-        <div class="speech-bubble absolute bottom-full right-0 mb-4 w-max pointer-events-none">
-            <div class="bg-white px-5 py-3 rounded-2xl shadow-2xl text-[10px] font-black text-slate-900 border border-blue-100 uppercase">¿Quieres que busque algo? 🏖️</div>
-        </div>
-        <div class="character-container relative w-20 h-20 bg-yellow-400 rounded-full border-4 border-white flex items-center justify-center overflow-hidden">
-            <i class="fas fa-sun text-yellow-600 text-5xl relative z-10 animate-pulse"></i>
-            <i class="fas fa-glasses absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-900 text-3xl z-20 mt-1 transform -rotate-6"></i>
+    <div id="chatBtnContainer" onclick="toggleChat()" class="fixed bottom-10 right-10 z-[300] cursor-pointer group">
+        <div class="relative w-20 h-20 bg-slate-900 rounded-full border-4 border-white flex items-center justify-center shadow-2xl transition-all hover:scale-110">
+            <i class="fas fa-sun text-amber-400 text-5xl opacity-90"></i>
+            <i class="fas fa-glasses absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-3xl z-20 mt-1 transform -rotate-12"></i>
         </div>
     </div>
 
-    <div id="chatWindow" class="fixed bottom-32 right-8 z-[300] w-[380px] max-w-[95vw] bg-white rounded-[2.5rem] shadow-2xl border border-slate-200 overflow-hidden hidden flex flex-col transition-all duration-300">
-        <div class="bg-slate-900 p-6 text-white flex items-center gap-3">
-            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center border-2 border-blue-400"><i class="fas fa-robot text-lg text-white"></i></div>
-            <div><p class="text-[10px] font-black uppercase opacity-60">Sistema Inteligente</p><h4 class="text-sm font-black uppercase italic">GuíaAca SmartBot</h4></div>
-            <button onclick="toggleChat()" class="ml-auto opacity-50"><i class="fas fa-times"></i></button>
+    <div id="chatWindow" class="fixed bottom-36 right-10 z-[300] w-[380px] max-w-[95vw] bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden hidden flex flex-col transition-all duration-500 text-black">
+        <div class="bg-slate-900 p-6 text-white flex items-center gap-4">
+            <div class="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center text-white"><i class="fas fa-robot text-lg text-white"></i></div>
+            <h4 class="text-sm font-black uppercase italic text-white">SmartBot Aca</h4>
+            <button onclick="toggleChat()" class="ml-auto opacity-30 hover:opacity-100 transition-all text-white"><i class="fas fa-times text-xl text-white"></i></button>
         </div>
-        <div id="chatBody" class="h-80 overflow-y-auto p-6 bg-slate-50 flex flex-col gap-4 text-xs font-semibold text-slate-700">
-            <div class="bg-blue-100 p-4 rounded-2xl rounded-tl-none self-start shadow-sm text-black">
-                ¡Qué onda! Soy el asistente del <strong>Directorio Inteligente</strong>. Prueba con <strong>"Muéstrame comida"</strong> o <strong>"Ver mis favoritos"</strong>. 🌊
+        <div id="chatBody" class="h-80 overflow-y-auto p-8 bg-slate-50 flex flex-col gap-5 text-xs font-semibold text-black">
+            <div class="bg-slate-900 text-white p-5 rounded-[1.5rem] rounded-tl-none self-start shadow-xl text-white">
+                ¡Bienvenido! Puedo filtrar categorías por ti. Prueba con: <em>"Comida"</em> o <em>"Playa"</em>. 🌊
             </div>
         </div>
-        <div class="p-4 bg-white border-t border-slate-100 space-y-3">
-            <div id="chatOptions" class="flex flex-wrap gap-2">
-                <button onclick="mensajeRapido('playas')" class="text-[9px] font-black uppercase bg-blue-50 text-blue-700 px-3 py-2 rounded-lg">🏝️ Playas</button>
-                <button onclick="mensajeRapido('comida')" class="text-[9px] font-black uppercase bg-orange-50 text-orange-700 px-3 py-2 rounded-lg">🥘 Comida</button>
-            </div>
-            <div class="flex items-center gap-2 bg-slate-100 p-2 rounded-2xl border">
-                <input type="text" id="chatInput" placeholder="Dime qué quieres ver..." class="flex-grow bg-transparent outline-none px-3 py-1 text-xs text-slate-800" onkeypress="if(event.key === 'Enter') procesarEscritura()">
-                <button onclick="procesarEscritura()" class="bg-blue-600 text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-lg"><i class="fas fa-paper-plane text-xs"></i></button>
+        <div class="p-6 bg-white border-t border-slate-50">
+            <div class="flex items-center gap-3 bg-slate-100 p-3 rounded-xl border">
+                <input type="text" id="chatInput" placeholder="¿Cómo te ayudo?" class="flex-grow bg-transparent outline-none px-2 py-1 text-slate-900 font-bold" onkeypress="if(event.key === 'Enter') procesarEscritura()">
+                <button onclick="procesarEscritura()" class="bg-slate-900 text-white w-10 h-10 rounded-lg flex items-center justify-center shadow-lg"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
 
 <script>
+    // --- DATOS ---
     const negocios = [
-        { nombre: "Decoraciones Ana Lizbeth", categoria: "Decoración y Eventos Sociales", descripcion: "Decoración profesional para eventos de alto nivel.", zona: "Luis Donaldo Colosio", tel: "7442211689", img: "img/analizbeth.jpg" },
-        { nombre: "Papelería Paty", categoria: "Comercio", descripcion: "Internet, copias e impresiones de alta calidad.", zona: "Granjas del Marqués", tel: "7444433601", img: "img/papepaty.jpg" },
-        { nombre: "Peluquería Mercado", categoria: "Comercio", descripcion: "Cortes modernos y clásicos para toda la familia.", zona: "Mercado Colosio", tel: "0", img: "img/peluquero.jpg" },
-        { nombre: "Venta de Jugos Naturales", categoria: "Comercio", descripcion: "Jugos frescos recién hechos 100% naturales.", zona: "Av. Colosio", tel: "0", img: "img/jugos.jpg" }
+        { nombre: "Decoraciones Ana Lizbeth", categoria: "Decoración y Eventos Sociales", descripcion: "Creamos sensaciones y sonrisas perdurables en cada uno de tus eventos.", zona: "Rinconada Luis Donaldo Colosio", tel: "7442211689", img: "img/analizbeth.jpg" },
+        { nombre: "Papelería Paty", categoria: "Comercio", descripcion: "Tu aliado digital en la zona Diamante, venta de articulos de papeleria e impresiones, copias.", zona: "Granjas del Marqués", tel: "7444433601", img: "img/papepaty.jpg" },
+        { nombre: "Peluquería Mercado", categoria: "Comercio", descripcion: "Cortes de cabello para toda la Familia", zona: "Mercado Colosio", tel: "0", img: "img/peluquero.jpg" },
+        { nombre: "Venta de Jugos Naturales", categoria: "Comercio", descripcion: "Venta de jugo de naranja recién exprimido, en bolsa o vaso.", zona: "Av. Principal Colosio", tel: "0", img: "img/jugos.jpg" }
     ];
 
     let favoritos = JSON.parse(localStorage.getItem('guiaaca_favs')) || [];
 
-    // --- LÓGICA SMART CHAT ---
+    // --- CHAT LÓGICA ---
     const INTENCIONES = [
-        { etiquetas: ["comida", "hambre", "gastronomia"], respuesta: "¡Excelente! Te filtro los mejores lugares para comer en el Directorio ahora mismo. 🥘", accion: () => filtrarPorCategoria('Gastronomía') },
-        { etiquetas: ["playa", "mar", "turismo", "visitar"], respuesta: "Acapulco tiene magia. Aquí tienes las opciones turísticas destacadas del Directorio. 🏖️", accion: () => filtrarPorCategoria('Turismo') },
-        { etiquetas: ["favorito", "guardado", "corazon"], respuesta: "Aquí tienes los negocios de Acapulco que has guardado como favoritos. ❤️", accion: () => verFavoritos() },
-        { etiquetas: ["todo", "limpiar", "inicio"], respuesta: "Restableciendo el Directorio completo. ¡Explora todo lo que ofrece Acapulco! ☀️", accion: () => mostrarNegocios(negocios) }
+        { etiquetas: ["comida", "hambre", "gastronomia"], respuesta: "He filtrado los mejores establecimientos gastronómicos registrados. 🥘", accion: () => filtrarPorCategoria('Gastronomía') },
+        { etiquetas: ["playa", "mar", "turismo"], respuesta: "Aquí tienes las opciones turísticas destacadas en la bahía. 🏖️", accion: () => filtrarPorCategoria('Turismo') },
+        { etiquetas: ["todo", "inicio"], respuesta: "Restableciendo el Directorio completo. ☀️", accion: () => mostrarNegocios(negocios) }
     ];
 
     function toggleChat() { document.getElementById('chatWindow').classList.toggle('hidden'); }
@@ -191,18 +203,18 @@
         const body = document.getElementById('chatBody');
         const msg = document.createElement('div');
         if(id) msg.id = id;
-        msg.className = type === 'bot' ? "bg-blue-100 p-4 rounded-2xl rounded-tl-none self-start mb-2 text-black shadow-sm" : "bg-slate-900 text-white p-4 rounded-2xl rounded-tr-none self-end mb-2 shadow-sm";
+        msg.className = type === 'bot' ? "bg-white p-5 rounded-2xl rounded-tl-none self-start shadow-sm border border-slate-100 text-slate-900 mb-2" : "bg-slate-900 text-white p-5 rounded-2xl rounded-tr-none self-end shadow-xl mb-2";
         msg.innerHTML = text;
         body.appendChild(msg);
         body.scrollTop = body.scrollHeight;
     }
 
-    function procesarEscritura() { const input = document.getElementById('chatInput'); procesarEntrada(input.value); input.value = ""; }
-
-    function procesarEntrada(texto) {
-        const query = texto.trim().toLowerCase();
+    function procesarEscritura() {
+        const input = document.getElementById('chatInput');
+        const query = input.value.trim().toLowerCase();
         if(!query) return;
-        addMessage(texto, 'user');
+        addMessage(input.value, 'user');
+        input.value = "";
         const tempId = "ai-" + Date.now();
         addMessage("Analizando... 🌊", 'bot', tempId);
         setTimeout(() => {
@@ -214,62 +226,51 @@
                     encontrado = true; break;
                 }
             }
-            if(!encontrado) document.getElementById(tempId).innerHTML = "No entendí eso, pero puedo filtrar por: <strong>Comida, Playas o ver Favoritos</strong>.";
+            if(!encontrado) document.getElementById(tempId).innerHTML = "No entendí eso. Intenta con: <strong>Comida, Playas o Fiscal</strong>.";
         }, 800);
     }
 
-    function mensajeRapido(op) {
-        document.getElementById('chatInput').value = op === 'playas' ? "¿Qué playas me recomiendas?" : "¿Qué puedo comer en Acapulco?";
-        procesarEscritura();
-    }
-
-    // --- CLIMA Y FECHA ---
     function actualizarPulso() {
         const fecha = new Date();
-        const opciones = { weekday: 'long', day: 'numeric', month: 'short' };
-        const fechaFormateada = fecha.toLocaleDateString('es-MX', opciones);
-        document.getElementById('fechaText').innerText = fechaFormateada.charAt(0).toUpperCase() + fechaFormateada.slice(1);
-
+        const opciones = { day: 'numeric', month: 'short', year: 'numeric' };
+        document.getElementById('fechaText').innerText = fecha.toLocaleDateString('es-MX', opciones);
         const h = fecha.getHours();
         if(h >= 7 && h < 18) {
-            document.getElementById('tempText').innerText = "30°C Soleado";
-            document.getElementById('climaIcon').className = "fas fa-sun text-yellow-400 text-3xl animate-pulse";
-            document.getElementById('playaStatus').innerText = "Oleaje Tranquilo";
-            document.getElementById('playaStatus').className = "text-sm font-bold text-emerald-400";
+            document.getElementById('tempText').innerText = "32°C Soleado";
         } else {
-            document.getElementById('tempText').innerText = "24°C Noche Fresca";
-            document.getElementById('climaIcon').className = "fas fa-moon text-indigo-300 text-3xl";
-            document.getElementById('playaStatus').innerText = "Marea Alta";
-            document.getElementById('playaStatus').className = "text-sm font-bold text-orange-400";
-            document.getElementById('banderaIcon').className = "fas fa-flag text-orange-400 text-2xl";
+            document.getElementById('tempText').innerText = "25°C Despejado";
         }
     }
 
-    // --- LÓGICA DIRECTORIO ---
     function mostrarNegocios(lista, label = "Negocios Destacados") {
         const contenedor = document.getElementById('contenedorNegocios');
         contenedor.innerHTML = '';
         document.getElementById('currentFilterText').innerText = label;
         lista.forEach(n => {
             const isFav = favoritos.includes(n.nombre);
-            const hasWhatsApp = n.tel && n.tel !== "0";
+            const hasWA = n.tel && n.tel !== "0";
             const qMap = encodeURIComponent(n.nombre + ' Acapulco');
             contenedor.innerHTML += `
-                <article class="business-card text-black shadow-sm">
+                <article class="business-card text-black">
                     <div class="fav-circle" onclick="toggleFav('${n.nombre}')">
-                        <i class="fa-heart ${isFav ? 'fas fav-active' : 'far fav-inactive'} text-lg"></i>
+                        <i class="fa-heart ${isFav ? 'fas text-rose-600' : 'far text-slate-300'} text-xl transition-all"></i>
                     </div>
-                    <div class="h-52 overflow-hidden bg-slate-200"><img src="${n.img}" class="w-full h-full object-cover"></div>
-                    <div class="p-7 flex flex-col">
-                        <h3 class="text-xl font-bold mb-1 uppercase italic text-slate-900">${n.nombre}</h3>
-                        <p class="text-slate-500 text-xs mb-6 italic leading-relaxed">"${n.descripcion}"</p>
-                        <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase mb-8"><i class="fas fa-location-dot text-blue-500"></i><span>${n.zona}</span></div>
-                        <div class="mt-auto space-y-3">
-                            ${hasWhatsApp ? `<div class="grid grid-cols-2 gap-3">
-                                <a href="https://wa.me/52${n.tel}" class="bg-emerald-600 text-white py-3 rounded-xl font-bold text-[10px] uppercase text-center flex items-center justify-center gap-2 shadow-sm"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                                <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-slate-100 text-slate-700 py-3 rounded-xl font-bold text-[10px] uppercase border shadow-sm">QR</button>
-                            </div>` : ''}
-                            <a href="https://www.google.com/maps/search/${qMap}" target="_blank" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-[10px] uppercase text-center block shadow-sm">Ver Ubicación</a>
+                    <div class="h-52 overflow-hidden bg-slate-100"><img src="${n.img}" class="w-full h-full object-cover"></div>
+                    <div class="p-8 flex flex-col flex-grow bg-white text-black">
+                        <div class="mb-4"><span class="text-[9px] font-bold uppercase text-slate-500 bg-slate-100 px-3 py-1 rounded-lg border">${n.categoria}</span></div>
+                        <h3 class="text-xl font-extrabold mb-3 italic text-slate-900 uppercase leading-none tracking-tighter text-black">${n.nombre}</h3>
+                        <p class="business-desc italic font-medium text-slate-600">${n.descripcion}</p>
+                        <div class="flex items-center gap-3 text-slate-400 text-[10px] font-bold uppercase mb-8 border-b border-slate-50 pb-4 text-black">
+                            <i class="fas fa-map-marker-alt text-amber-600"></i><span>${n.zona}</span>
+                        </div>
+                        <div class="mt-auto grid grid-cols-1 gap-3">
+                            ${hasWA ? `
+                                <div class="grid grid-cols-2 gap-3 text-white">
+                                    <a href="https://wa.me/52${n.tel}" target="_blank" class="bg-slate-900 text-white py-4 rounded-xl font-bold text-[9px] uppercase text-center shadow-xl hover:bg-blue-900 transition-all text-white">WhatsApp</a>
+                                    <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-slate-50 text-slate-900 py-4 rounded-xl font-bold text-[9px] uppercase border border-slate-200">QR</button>
+                                </div>
+                            ` : ''}
+                            <a href="https://www.google.com/maps/search/playas+y+lugares+de+interes+acapulco{qMap}" target="_blank" class="w-full bg-slate-900 text-white py-4 rounded-xl font-bold text-[9px] uppercase text-center block shadow-2xl hover:bg-blue-900 text-white">Ver Ubicación</a>
                         </div>
                     </div>
                 </article>`;
@@ -283,14 +284,14 @@
         mostrarNegocios(negocios, document.getElementById('currentFilterText').innerText);
     }
     function verFavoritos() { mostrarNegocios(negocios.filter(n => favoritos.includes(n.nombre)), "Tus Favoritos"); }
-    function filtrarPorCategoria(c) { mostrarNegocios(negocios.filter(n => n.categoria === c), c); window.scrollTo({ top: 450, behavior: 'smooth' }); }
+    function filtrarPorCategoria(c) { mostrarNegocios(negocios.filter(n => n.categoria === c), c); window.scrollTo({ top: 550, behavior: 'smooth' }); }
     function generarQR(t, n) {
-        document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent('https://wa.me/52'+t)}`;
+        document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent('https://wa.me/52'+t)}`;
         document.getElementById('qrNombre').innerText = n;
         document.getElementById('modalQR').classList.remove('hidden');
     }
     function cerrarQR() { document.getElementById('modalQR').classList.add('hidden'); }
-
+    
     document.getElementById('inputBusqueda').addEventListener('input', (e) => {
         const t = e.target.value.toLowerCase();
         mostrarNegocios(negocios.filter(n => n.nombre.toLowerCase().includes(t) || n.zona.toLowerCase().includes(t)), t ? `Resultados: "${t}"` : "Negocios Destacados");
