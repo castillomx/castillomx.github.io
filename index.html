@@ -10,25 +10,24 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #0f172a; }
         
+        /* HEADER CON BANNER DE LA BAHÍA */
         .gradient-header {
             background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)),
                         url('https://images.unsplash.com/photo-1589828914726-278438e35074?q=80&w=1920');
             background-size: cover;
             background-position: center;
-            min-height: 500px;
+            min-height: 550px;
         }
 
+        /* TARJETAS DE NEGOCIO */
         .business-card {
             background: white; border-radius: 20px; border: 1px solid #e2e8f0;
-            transition: all 0.3s ease; position: relative;
-            overflow: hidden; display: flex; flex-direction: column;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+            display: flex; flex-direction: column;
         }
-        .business-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-            border-color: #3b82f6;
-        }
+        .business-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05); border-color: #3b82f6; }
 
+        /* FAVORITOS */
         .fav-circle {
             position: absolute; top: 15px; right: 15px; z-index: 20;
             width: 38px; height: 38px; border-radius: 10px;
@@ -38,19 +37,28 @@
         .fav-active { color: #e11d48; }
         .fav-inactive { color: #94a3b8; }
 
-        .btn-main { transition: all 0.2s; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-main:hover { transform: scale(1.02); filter: brightness(1.1); }
-        
+        /* PERSONAJE DEL CHAT ANIMADO */
+        @keyframes float-character {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(3deg); }
+        }
+        .character-container {
+            animation: float-character 4s ease-in-out infinite;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.2));
+            transition: all 0.3s ease;
+        }
+        .character-container:hover { filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)) brightness(1.1); transform: scale(1.05); }
+        .speech-bubble { opacity: 0; transform: translateY(10px) scale(0.9); transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .group:hover .speech-bubble { opacity: 1; transform: translateY(0px) scale(1); }
+
         .btn-cat { transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); }
         .btn-cat:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2); }
-
-        /* Estilo para el aviso de privacidad */
         .privacy-box { background-color: #ffffff; border-top: 4px solid #3b82f6; }
     </style>
 </head>
 <body>
 
-    <div id="modalQR" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-6 bg-slate-900/90 backdrop-blur-sm">
+    <div id="modalQR" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-6 bg-slate-900/90 backdrop-blur-sm text-black">
         <div class="bg-white w-full max-w-xs rounded-3xl p-8 text-center shadow-2xl">
             <h3 id="qrNombre" class="text-lg font-bold text-slate-900 mb-4 uppercase italic">Negocio</h3>
             <div class="bg-slate-50 p-4 rounded-2xl inline-block mb-6 border">
@@ -64,7 +72,7 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <div class="bg-blue-900 p-2 rounded-lg text-white"><i class="fas fa-briefcase"></i></div>
-                <span class="text-xl font-black text-slate-900 tracking-tight uppercase">Guía<span class="text-blue-600">Aca</span> Pro</span>
+                <span class="text-xl font-black text-slate-900 tracking-tight uppercase text-black">Guía<span class="text-blue-600">Aca</span> Pro</span>
             </div>
             <a href="https://forms.gle/LekeLGcuVmXxix8VA" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-bold text-xs uppercase transition-all shadow-md">+ Registro</a>
         </div>
@@ -73,7 +81,7 @@
     <header class="gradient-header flex items-center justify-center px-6 py-16 text-center text-white">
         <div class="max-w-4xl">
             <p class="text-blue-400 font-bold tracking-[4px] uppercase text-[10px] mb-4">Directorio Inteligente de Negocios</p>
-            <h1 class="text-4xl md:text-6xl font-black mb-8 leading-tight italic drop-shadow-md uppercase">Bahía de <span class="text-blue-400">Acapulco</span></h1>
+            <h1 class="text-4xl md:text-6xl font-black mb-8 leading-tight italic drop-shadow-md uppercase tracking-tighter">Bahía de <span class="text-blue-400">Acapulco</span></h1>
             
             <div class="relative max-w-xl mx-auto mb-10 text-black">
                 <input type="text" id="inputBusqueda" placeholder="Buscar comercio o zona..." class="w-full py-4 px-12 rounded-xl bg-white text-slate-900 shadow-2xl outline-none focus:ring-4 focus:ring-blue-500/30">
@@ -91,7 +99,7 @@
             <div class="flex flex-wrap justify-center gap-4">
                 <button onclick="mostrarNegocios(negocios)" class="bg-white text-slate-900 px-8 py-4 rounded-xl font-bold text-xs uppercase shadow-lg btn-main text-black">Ver Todo</button>
                 <button onclick="verFavoritos()" class="bg-rose-600 text-white px-8 py-4 rounded-xl font-bold text-xs uppercase shadow-lg btn-main"><i class="fas fa-heart mr-2"></i> Favoritos</button>
-                <button onclick="window.open('https://www.google.com/maps/search/playas+y+lugares+de+interes+acapulco', '_blank')" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-xs uppercase shadow-lg btn-main border border-blue-400">
+                <button onclick="window.open('https://www.google.com/maps/search/playas+y+lugares+de+interes+acapulco', '_blank')" class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold text-xs uppercase shadow-lg btn-main border border-blue-400 text-black">
                     <i class="fas fa-map-marked-alt mr-2"></i> Playas y Sitios
                 </button>
             </div>
@@ -100,28 +108,21 @@
 
     <main class="max-w-7xl mx-auto -mt-10 px-6 pb-20 relative z-20">
         <h2 id="currentFilterText" class="bg-slate-900 text-white px-6 py-2 rounded-lg shadow-xl text-[10px] font-black uppercase tracking-[2px] inline-block mb-10 italic">Negocios Destacados</h2>
-        <div id="contenedorNegocios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-black"></div>
+        <div id="contenedorNegocios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
     </main>
 
     <section class="max-w-7xl mx-auto px-6 mb-12">
         <div class="privacy-box p-8 md:p-12 rounded-3xl shadow-sm border border-slate-200">
-            <div class="flex items-center gap-4 mb-6">
-                <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 text-xl shadow-sm">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
-                <h3 class="text-lg font-black text-slate-900 uppercase tracking-tight">Aviso de Privacidad <span class="text-blue-600">Simplificado</span></h3>
-            </div>
+            <h3 class="text-lg font-black text-slate-900 uppercase tracking-tight mb-6">Aviso de Privacidad <span class="text-blue-600">Simplificado</span></h3>
             <div class="grid md:grid-cols-2 gap-8 text-slate-600 text-sm leading-relaxed">
                 <div>
-                    <p class="font-bold text-slate-800 mb-2">Responsable de Datos:</p>
-                    <p class="mb-4 italic">GuíaAca Pro - Proyecto de Tesis Profesional de Contaduría.</p>
-                    <p class="font-bold text-slate-800 mb-2">Finalidad:</p>
-                    <p>La información comercial recopilada (Nombre del negocio, ubicación y contacto) tiene como único fin la difusión publicitaria gratuita y el desarrollo de una propuesta de asesoría contable ante el SAT para comerciantes de Acapulco, Guerrero.</p>
+                    <p class="font-bold text-slate-800 mb-2">Responsable:</p>
+                    <p class="mb-4 italic text-black">GuíaAca Pro - Proyecto Académico.</p>
+                    <p>La información es utilizada únicamente para fines de vinculación comercial y académica en Acapulco, Gro.</p>
                 </div>
                 <div>
-                    <p class="font-bold text-slate-800 mb-2">Protección y Derechos:</p>
-                    <p class="mb-4">Sus datos personales están protegidos bajo estándares de seguridad digital. Usted tiene derecho al acceso, rectificación o cancelación de su registro enviando una solicitud a través del formulario de contacto oficial.</p>
-                    <p class="text-[11px] bg-slate-50 p-3 rounded-lg border border-slate-100">Al utilizar este directorio o registrar su negocio, usted acepta que la información sea pública para fines de vinculación comercial entre clientes y prestadores de servicios.</p>
+                    <p class="font-bold text-slate-800 mb-2">Derechos:</p>
+                    <p>Sus datos están protegidos. Puede solicitar la baja de su registro en cualquier momento a través de los canales oficiales.</p>
                 </div>
             </div>
         </div>
@@ -132,11 +133,41 @@
         <p class="text-slate-400 text-[10px] mt-2 italic uppercase">Acapulco de Juárez, Guerrero, México</p>
     </footer>
 
+    <div id="chatBtnContainer" onclick="toggleChat()" class="fixed bottom-8 right-8 z-[300] cursor-pointer group">
+        <div class="speech-bubble absolute bottom-full right-0 mb-3 w-max pointer-events-none">
+            <div class="bg-white px-5 py-3 rounded-2xl shadow-xl text-xs font-black text-slate-900 border border-blue-100 relative">
+                ¡Psst! ¿Necesitas ayuda? 👀
+                <div class="absolute bottom-0 right-6 translate-y-1/2 rotate-45 w-4 h-4 bg-white border-b border-r border-blue-100"></div>
+            </div>
+        </div>
+        <div class="character-container relative w-20 h-20 bg-yellow-400 rounded-full border-4 border-white flex items-center justify-center overflow-hidden">
+            <i class="fas fa-sun text-yellow-600 text-5xl relative z-10 animate-pulse"></i>
+            <i class="fas fa-glasses absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-slate-900 text-3xl z-20 mt-1 transform -rotate-6"></i>
+        </div>
+    </div>
+
+    <div id="chatWindow" class="fixed bottom-32 right-8 z-[300] w-[350px] max-w-[90vw] bg-white rounded-[2rem] shadow-2xl border border-slate-200 overflow-hidden hidden flex flex-col text-black">
+        <div class="bg-slate-900 p-6 text-white text-black">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center border-2 border-blue-400"><i class="fas fa-map-marker-alt"></i></div>
+                <h4 class="text-sm font-black uppercase italic">Explora Acapulco</h4>
+                <button onclick="toggleChat()" class="ml-auto opacity-50"><i class="fas fa-times"></i></button>
+            </div>
+        </div>
+        <div id="chatBody" class="h-80 overflow-y-auto p-6 bg-slate-50 flex flex-col gap-4 text-xs font-medium">
+            <div class="bg-blue-100 p-4 rounded-2xl rounded-tl-none">¡Hola! Soy tu guía digital. ¿Qué necesitas?</div>
+        </div>
+        <div id="chatOptions" class="p-4 bg-white border-t border-slate-100 flex flex-wrap gap-2 text-black">
+            <button onclick="chatRespuesta('turismo')" class="text-[9px] font-black uppercase bg-blue-50 text-blue-700 px-3 py-2 rounded-lg">🏝️ Turismo</button>
+            <button onclick="chatRespuesta('ayuda')" class="text-[9px] font-black uppercase bg-slate-100 text-slate-700 px-3 py-2 rounded-lg">❓ Ayuda</button>
+        </div>
+    </div>
+
     <script>
         const negocios = [
-            { nombre: "Decoraciones Ana Lizbeth", categoria: "Decoración y Eventos Sociales", descripcion: "Decoración profesional y planeación de eventos exclusivos.", zona: "Luis Donaldo Colosio", tel: "7442211689", img: "img/analizbeth.jpg" },
+            { nombre: "Decoraciones Ana Lizbeth", categoria: "Decoración y Eventos Sociales", descripcion: "Decoración profesional para todo tipo de eventos.", zona: "Luis Donaldo Colosio", tel: "7442211689", img: "img/analizbeth.jpg" },
             { nombre: "Papelería Paty", categoria: "Comercio", descripcion: "Artículos escolares, impresiones y servicios digitales.", zona: "Granjas del Marqués", tel: "7444433601", img: "img/papepaty.jpg" },
-            { nombre: "Peluquería Mercado", categoria: "Comercio", descripcion: "Cortes de cabello para toda la familia.", zona: "Mártires de La Democracia", tel: "0", img: "img/peluquero.jpg" },
+            { nombre: "Peluquería Mercado", categoria: "Comercio", descripcion: "Cortes de cabello profesional.", zona: "Mártires de La Democracia", tel: "0", img: "img/peluquero.jpg" },
             { nombre: "Venta de Jugos Naturales", categoria: "Comercio", descripcion: "Jugos 100% naturales recién hechos.", zona: "Av. Luis Donaldo Colosio", tel: "0", img: "img/jugos.jpg" }
         ];
 
@@ -158,49 +189,29 @@
             const contenedor = document.getElementById('contenedorNegocios');
             contenedor.innerHTML = '';
             document.getElementById('currentFilterText').innerText = label;
-
-            if (lista.length === 0) {
-                contenedor.innerHTML = '<div class="col-span-full py-20 text-center text-slate-400 font-medium italic">No se encontraron resultados registrados.</div>';
-                return;
-            }
+            if (lista.length === 0) { contenedor.innerHTML = '<div class="col-span-full py-20 text-center text-slate-400 italic">Sin resultados.</div>'; return; }
 
             lista.forEach(n => {
                 const isFav = favoritos.includes(n.nombre);
                 const hasWhatsApp = n.tel && n.tel !== "0";
-                const queryMap = encodeURIComponent(n.nombre + ' ' + n.zona + ' Acapulco');
+                const queryMap = encodeURIComponent(n.nombre + ' Acapulco');
 
                 contenedor.innerHTML += `
-                    <article class="business-card">
+                    <article class="business-card text-black">
                         <div class="fav-circle" onclick="toggleFav('${n.nombre}')">
-                            <i class="fa-heart ${isFav ? 'fas fav-active' : 'far fav-inactive'} text-xl"></i>
+                            <i class="fa-heart ${isFav ? 'fas fav-active' : 'far fav-inactive'} text-lg text-black"></i>
                         </div>
-                        <div class="h-52 overflow-hidden relative bg-slate-200">
-                            <img src="${n.img}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1534723452862-4c874018d66d?w=500'">
-                            <div class="absolute bottom-4 left-4">
-                                <span class="bg-blue-600 text-white text-[9px] font-bold px-3 py-1.5 rounded-md uppercase shadow-lg">${n.categoria}</span>
-                            </div>
-                        </div>
-                        <div class="p-7 flex-grow flex flex-col">
-                            <h3 class="text-xl font-bold text-slate-900 mb-2 italic tracking-tight uppercase">${n.nombre}</h3>
-                            <p class="text-slate-500 text-xs leading-relaxed mb-6 font-medium italic">"${n.descripcion}"</p>
-                            <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase mb-8">
-                                <i class="fas fa-location-dot text-blue-500"></i>
-                                <span>${n.zona}</span>
-                            </div>
+                        <div class="h-52 overflow-hidden relative"><img src="${n.img}" class="w-full h-full object-cover"></div>
+                        <div class="p-7 flex flex-col">
+                            <h3 class="text-xl font-bold mb-2 uppercase italic">${n.nombre}</h3>
+                            <p class="text-slate-500 text-xs mb-6 italic">"${n.descripcion}"</p>
+                            <div class="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase mb-8"><i class="fas fa-location-dot text-blue-500"></i><span>${n.zona}</span></div>
                             <div class="mt-auto space-y-3">
-                                ${hasWhatsApp ? `
-                                    <div class="grid grid-cols-2 gap-3">
-                                        <a href="https://wa.me/52${n.tel}" target="_blank" class="bg-emerald-600 text-white py-3 rounded-xl font-bold text-[10px] uppercase text-center flex items-center justify-center gap-2">
-                                            <i class="fab fa-whatsapp"></i> WhatsApp
-                                        </a>
-                                        <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-slate-100 text-slate-700 py-3 rounded-xl font-bold text-[10px] uppercase border border-slate-200 flex items-center justify-center gap-2">
-                                            <i class="fas fa-qrcode"></i> QR
-                                        </button>
-                                    </div>
-                                ` : ''}
-                                <a href="https://www.google.com/maps/search/?api=1&query=${queryMap}" target="_blank" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-[10px] uppercase text-center flex items-center justify-center gap-2">
-                                    <i class="fas fa-directions"></i> Ver Ubicación
-                                </a>
+                                ${hasWhatsApp ? `<div class="grid grid-cols-2 gap-3">
+                                    <a href="https://wa.me/52${n.tel}" class="bg-emerald-600 text-white py-3 rounded-xl font-bold text-[10px] uppercase text-center">WhatsApp</a>
+                                    <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-slate-100 text-slate-700 py-3 rounded-xl font-bold text-[10px] uppercase border">QR</button>
+                                </div>` : ''}
+                                <a href="https://www.google.com/maps/search/?api=1&query=${queryMap}" target="_blank" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-[10px] uppercase text-center block">Ver Mapa</a>
                             </div>
                         </div>
                     </article>
@@ -209,15 +220,22 @@
         }
 
         function generarQR(tel, nombre) {
-            const url = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent('https://wa.me/52'+tel)}`;
-            document.getElementById('qrImagen').src = url;
+            document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent('https://wa.me/52'+tel)}`;
             document.getElementById('qrNombre').innerText = nombre;
             document.getElementById('modalQR').classList.remove('hidden');
         }
-
         function cerrarQR() { document.getElementById('modalQR').classList.add('hidden'); }
-        function filtrarPorCategoria(cat) { mostrarNegocios(negocios.filter(n => n.categoria === cat), cat); window.scrollTo({ top: 400, behavior: 'smooth' }); }
-        
+        function toggleChat() { document.getElementById('chatWindow').classList.toggle('hidden'); }
+        function chatRespuesta(opcion) {
+            const body = document.getElementById('chatBody');
+            const msg = document.createElement('div');
+            msg.className = "bg-blue-100 p-4 rounded-2xl rounded-tl-none self-start text-black";
+            if(opcion === 'turismo') msg.innerHTML = "<strong>Playas:</strong> Puerto Marqués y Caleta son geniales. <br><strong>Comida:</strong> No olvides el Pescado a la Talla.";
+            if(opcion === 'ayuda') msg.innerHTML = "Usa el buscador para hallar negocios rápido o el <strong>corazón</strong> para guardar favoritos.";
+            body.appendChild(msg);
+            body.scrollTop = body.scrollHeight;
+        }
+
         document.getElementById('inputBusqueda').addEventListener('input', (e) => {
             const t = e.target.value.toLowerCase();
             mostrarNegocios(negocios.filter(n => n.nombre.toLowerCase().includes(t) || n.zona.toLowerCase().includes(t)), t ? `Resultados: "${t}"` : "Negocios Destacados");
