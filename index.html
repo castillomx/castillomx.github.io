@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GuíaAca Pro - Directorio Inteligente Acapulco</title>
+    <title>Directorio Inteligente de Negocios en Acapulco</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #0f172a; scroll-behavior: smooth; }
         
-        /* BANNER BAHÍA DE ACAPULCO */
         .gradient-header {
             background: linear-gradient(rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.9)),
                         url('https://images.unsplash.com/photo-1589828914726-278438e35074?q=80&w=1920');
             background-size: cover; background-position: center; min-height: 600px;
         }
 
-        /* TARJETAS PROFESIONALES */
         .business-card {
             background: white; border-radius: 20px; border: 1px solid #e2e8f0;
             transition: all 0.3s ease; position: relative; overflow: hidden;
@@ -25,13 +23,11 @@
         }
         .business-card:hover { transform: translateY(-5px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); border-color: #3b82f6; }
 
-        /* WIDGET CLIMA (GLASSMORPHISM) */
         .weather-badge {
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px;
         }
 
-        /* ANIMACIÓN PERSONAJE */
         @keyframes float-character {
             0%, 100% { transform: translateY(0px) rotate(0deg); }
             50% { transform: translateY(-12px) rotate(3deg); }
@@ -57,18 +53,19 @@
     </div>
 
     <nav class="bg-white border-b border-slate-200 sticky top-0 z-50 px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
+        <div class="max-w-7xl mx-auto flex justify-between items-center text-black">
             <div class="flex items-center gap-3">
                 <div class="bg-blue-900 p-2 rounded-lg text-white"><i class="fas fa-briefcase"></i></div>
                 <span class="text-xl font-black text-slate-900 uppercase">Guía<span class="text-blue-600">Aca</span> Pro</span>
             </div>
-            <a href="https://forms.gle/LekeLGcuVmXxix8VA" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-bold text-xs uppercase transition-all shadow-md">+ Registrar Mi Negocio</a>
+            <a href="https://forms.gle/LekeLGcuVmXxix8VA" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg font-bold text-xs uppercase transition-all shadow-md">+ Registro</a>
         </div>
     </nav>
 
     <header class="gradient-header flex items-center justify-center px-6 py-12 text-center text-white relative">
         <div class="max-w-4xl w-full">
-            <h1 class="text-4xl md:text-6xl font-black mb-8 italic drop-shadow-md uppercase tracking-tighter">Bahía de <span class="text-blue-400">Acapulco</span></h1>
+            <p class="text-blue-400 font-bold tracking-[4px] uppercase text-[10px] mb-4">Acapulco, Guerrero</p>
+            <h1 class="text-4xl md:text-5xl font-black mb-8 italic drop-shadow-md uppercase tracking-tighter">Directorio Inteligente de <span class="text-blue-400">Negocios en Acapulco</span></h1>
             
             <div class="relative max-w-xl mx-auto mb-8">
                 <input type="text" id="inputBusqueda" placeholder="¿Qué negocio o playa buscas?" class="w-full py-4 px-12 rounded-xl bg-white text-slate-900 shadow-2xl outline-none focus:ring-4 focus:ring-blue-500/30">
@@ -79,7 +76,7 @@
                 <div class="flex items-center gap-4">
                     <i id="climaIcon" class="fas fa-sun text-yellow-400 text-3xl"></i>
                     <div class="text-left">
-                        <p class="text-[9px] uppercase font-black opacity-60 tracking-widest">Clima 2026</p>
+                        <p class="text-[9px] uppercase font-black opacity-60 tracking-widest">Clima actual</p>
                         <p id="tempText" class="text-sm font-bold">30°C Soleado</p>
                     </div>
                 </div>
@@ -113,14 +110,14 @@
     </main>
 
     <section class="max-w-7xl mx-auto px-6 mb-12">
-        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 border-t-4 border-t-blue-600">
+        <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 border-t-4 border-t-blue-600 text-black">
             <h3 class="text-lg font-black text-slate-900 uppercase tracking-tight mb-4">Aviso de Privacidad Profesional</h3>
-            <p class="text-slate-600 text-sm leading-relaxed mb-4 italic text-black">Este sitio es parte de un proyecto de Tesis Profesional. Los datos de los comercios son públicos para fines de vinculación turística y fomento a la formalidad fiscal en Acapulco de Juárez, Guerrero.</p>
+            <p class="text-slate-600 text-sm leading-relaxed mb-4 italic">Este sitio es parte de un proyecto de Tesis Profesional. Los datos de los comercios son públicos para fines de vinculación turística y fomento a la formalidad fiscal en Acapulco de Juárez, Guerrero.</p>
         </div>
     </section>
 
-    <footer class="bg-white border-t border-slate-200 py-12 text-center">
-        <p class="text-slate-900 font-bold text-xs uppercase tracking-widest">© 2026 GuíaAca Acapulco</p>
+    <footer class="bg-white border-t border-slate-200 py-12 text-center text-black">
+        <p class="text-slate-900 font-bold text-xs uppercase tracking-widest">© 2026 Directorio Inteligente de Negocios en Acapulco</p>
     </footer>
 
     <div id="chatBtnContainer" onclick="toggleChat()" class="fixed bottom-8 right-8 z-[300] cursor-pointer group">
@@ -136,21 +133,21 @@
     <div id="chatWindow" class="fixed bottom-32 right-8 z-[300] w-[380px] max-w-[95vw] bg-white rounded-[2.5rem] shadow-2xl border border-slate-200 overflow-hidden hidden flex flex-col transition-all duration-300">
         <div class="bg-slate-900 p-6 text-white flex items-center gap-3">
             <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center border-2 border-blue-400"><i class="fas fa-robot text-lg"></i></div>
-            <div><p class="text-[10px] font-black uppercase opacity-60">Sistema Experto</p><h4 class="text-sm font-black uppercase italic">GuíaAca SmartBot</h4></div>
+            <div><p class="text-[10px] font-black uppercase opacity-60">Sistema Inteligente</p><h4 class="text-sm font-black uppercase italic">GuíaAca SmartBot</h4></div>
             <button onclick="toggleChat()" class="ml-auto opacity-50 hover:opacity-100 transition-opacity"><i class="fas fa-times"></i></button>
         </div>
         <div id="chatBody" class="h-80 overflow-y-auto p-6 bg-slate-50 flex flex-col gap-4 text-xs font-semibold text-slate-700">
-            <div class="bg-blue-100 p-4 rounded-2xl rounded-tl-none self-start shadow-sm">
-                ¡Qué onda! Escribe algo como <strong>"Muéstrame comida"</strong> o <strong>"Enséñame mis favoritos"</strong> y yo controlaré la página por ti. 🌊
+            <div class="bg-blue-100 p-4 rounded-2xl rounded-tl-none self-start shadow-sm text-black">
+                ¡Qué onda! Soy el asistente del <strong>Directorio Inteligente</strong>. Prueba con <strong>"Muéstrame comida"</strong> o <strong>"Ver mis favoritos"</strong>. 🌊
             </div>
         </div>
         <div class="p-4 bg-white border-t border-slate-100 space-y-3">
-            <div id="chatOptions" class="flex flex-wrap gap-2">
-                <button onclick="procesarEntrada('Muéstrame comida')" class="text-[9px] font-black uppercase bg-orange-50 text-orange-700 px-3 py-2 rounded-lg border border-orange-100">🥘 Ver Comida</button>
-                <button onclick="procesarEntrada('Ver mis favoritos')" class="text-[9px] font-black uppercase bg-rose-50 text-rose-700 px-3 py-2 rounded-lg border border-rose-100">❤️ Favoritos</button>
+            <div id="chatOptions" class="flex flex-wrap gap-2 text-black">
+                <button onclick="mensajeRapido('playas')" class="text-[9px] font-black uppercase bg-blue-50 text-blue-700 px-3 py-2 rounded-lg border border-blue-100">🏝️ Playas</button>
+                <button onclick="mensajeRapido('comida')" class="text-[9px] font-black uppercase bg-orange-50 text-orange-700 px-3 py-2 rounded-lg border border-orange-100">🥘 Comida</button>
             </div>
             <div class="flex items-center gap-2 bg-slate-100 p-2 rounded-2xl border border-slate-200">
-                <input type="text" id="chatInput" placeholder="Dime qué categoría filtrar..." class="flex-grow bg-transparent outline-none px-3 py-1 text-xs text-slate-800" onkeypress="if(event.key === 'Enter') procesarEscritura()">
+                <input type="text" id="chatInput" placeholder="Dime qué quieres ver..." class="flex-grow bg-transparent outline-none px-3 py-1 text-xs text-slate-800" onkeypress="if(event.key === 'Enter') procesarEscritura()">
                 <button onclick="procesarEscritura()" class="bg-blue-600 text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-lg transition-transform active:scale-95"><i class="fas fa-paper-plane text-xs"></i></button>
             </div>
         </div>
@@ -168,13 +165,12 @@
 
     // --- LÓGICA SMART CHAT ---
     const INTENCIONES = [
-        { etiquetas: ["comida", "hambre", "gastronomia"], respuesta: "¡Excelente elección! Te filtro los mejores lugares para comer ahora mismo. 🥘", accion: () => filtrarPorCategoria('Gastronomía') },
-        { etiquetas: ["playa", "mar", "turismo", "visitar"], respuesta: "Acapulco tiene magia. Aquí tienes las opciones turísticas destacadas. 🏖️", accion: () => filtrarPorCategoria('Turismo') },
-        { etiquetas: ["fiscal", "contable", "sat", "impuestos", "contador"], respuesta: "Entendido. Te muestro las opciones de asesoría fiscal profesional. 📑", accion: () => filtrarPorCategoria('Asesoría Contable') },
-        { etiquetas: ["comercio", "tienda", "papeleria"], respuesta: "Mostrando los comercios registrados en el puerto. 🛒", accion: () => filtrarPorCategoria('Comercio') },
-        { etiquetas: ["favorito", "guardado", "corazon"], respuesta: "Aquí tienes los negocios que has guardado como favoritos. ❤️", accion: () => verFavoritos() },
-        { etiquetas: ["todo", "limpiar", "inicio"], respuesta: "Restableciendo el directorio completo. ¡Explora todo lo que ofrece Aca! ☀️", accion: () => mostrarNegocios(negocios) },
-        { etiquetas: ["hola", "tal", "hey"], respuesta: "¡Qué onda! Soy el SmartBot de GuíaAca. Puedo filtrar categorías o mostrar tus favoritos si me lo pides por aquí." }
+        { etiquetas: ["comida", "hambre", "gastronomia"], respuesta: "¡Excelente! Te filtro los mejores lugares para comer en el Directorio ahora mismo. 🥘", accion: () => filtrarPorCategoria('Gastronomía') },
+        { etiquetas: ["playa", "mar", "turismo", "visitar"], respuesta: "Acapulco tiene magia. Aquí tienes las opciones turísticas destacadas del Directorio. 🏖️", accion: () => filtrarPorCategoria('Turismo') },
+        { etiquetas: ["fiscal", "contable", "sat", "impuestos", "contador"], respuesta: "Entendido. Mostrando opciones de asesoría fiscal profesional en Acapulco. 📑", accion: () => filtrarPorCategoria('Asesoría Contable') },
+        { etiquetas: ["favorito", "guardado", "corazon"], respuesta: "Aquí tienes los negocios de Acapulco que has guardado como favoritos. ❤️", accion: () => verFavoritos() },
+        { etiquetas: ["todo", "limpiar", "inicio"], respuesta: "Restableciendo el Directorio completo. ¡Explora todo lo que ofrece Acapulco! ☀️", accion: () => mostrarNegocios(negocios) },
+        { etiquetas: ["hola", "tal", "hey"], respuesta: "¡Qué onda! Soy el asistente del Directorio Inteligente de Negocios en Acapulco. ¿Qué categoría deseas filtrar?" }
     ];
 
     function toggleChat() { document.getElementById('chatWindow').classList.toggle('hidden'); }
@@ -182,7 +178,7 @@
         const body = document.getElementById('chatBody');
         const msg = document.createElement('div');
         if(id) msg.id = id;
-        msg.className = type === 'bot' ? "bg-blue-100 p-4 rounded-2xl rounded-tl-none self-start mb-2" : "bg-slate-900 text-white p-4 rounded-2xl rounded-tr-none self-end mb-2";
+        msg.className = type === 'bot' ? "bg-blue-100 p-4 rounded-2xl rounded-tl-none self-start mb-2 text-black" : "bg-slate-900 text-white p-4 rounded-2xl rounded-tr-none self-end mb-2";
         msg.innerHTML = text;
         body.appendChild(msg);
         body.scrollTop = body.scrollHeight;
@@ -207,6 +203,11 @@
             }
             if(!encontrado) document.getElementById(tempId).innerHTML = "No entendí eso, pero puedo filtrar por: <strong>Comida, Playas, Fiscal o Ver tus Favoritos</strong>.";
         }, 800);
+    }
+
+    function mensajeRapido(op) {
+        document.getElementById('chatInput').value = op === 'playas' ? "¿Qué playas me recomiendas?" : "¿Qué puedo comer en Acapulco?";
+        procesarEscritura();
     }
 
     // --- CLIMA Y PULSO ---
