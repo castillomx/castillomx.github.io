@@ -78,6 +78,7 @@
             <button onclick="filtrarPorCategoria('Turismo')" class="btn-category px-5 py-3 bg-teal-600 text-white shadow-lg hover:bg-teal-700">🏝️ Turismo</button>
             <button onclick="filtrarPorCategoria('Comercio')" class="btn-category px-5 py-3 bg-slate-700 text-white shadow-lg hover:bg-slate-800">🛍️ Comercio</button>
             <button onclick="filtrarPorCategoria('Decoración y Eventos Sociales')" class="btn-category px-5 py-3 bg-rose-500 text-white shadow-lg hover:bg-rose-600">🎈 Eventos</button>
+            <button onclick="filtrarPorCategoria('Bienestar Natural')" class="btn-category px-5 py-3 bg-emerald-600 text-white shadow-lg hover:bg-emerald-700">🌱 Bienestar y Desarrollo</button>
             <button onclick="abrirModalClasificado()" class="btn-category px-5 py-3 bg-purple-700 text-white animate-pulse shadow-lg"><i class="fas fa-plus mr-2"></i> Nuevo Clasificado</button>
         </div>
 
@@ -172,7 +173,16 @@
             { id: 2, nombre: "Papelería Paty", categoria: "Comercio", descripcion: "Artículos de papelería, impresiones, copias.", zona: "Granjas del Marqués", tel: "7444433601", img: "img/papepaty.jpg" },
             { id: 3, nombre: "Peluquería Mercado", categoria: "Comercio", descripcion: "Cortes de cabello para toda la Familia", zona: "Mártires de La Democracia", tel: "0", img: "img/peluquero.jpg" },
             { id: 4, nombre: "Venta de Jugos Naturales", categoria: "Gastronomía, Comercio", descripcion: "Jugo de naranja recién exprimido.", zona: "Av. Principal Colosio", tel: "0", img: "img/jugos.jpg" },
-            { id: 5, nombre: "Asesorías Contables", categoria: "Asesoría Contable", descripcion: "Trámites ante el SAT y contabilidad.", zona: "Costa Azul, Acapulco.", tel: "7445315790", img: "img/contable.jpg" }
+            { id: 5, nombre: "Asesorías Contables", categoria: "Asesoría Contable", descripcion: "Trámites ante el SAT y contabilidad.", zona: "Costa Azul, Acapulco.", tel: "7445315790", img: "img/contable.jpg" },
+            { 
+    id: 6, 
+    nombre: "Centro de Yoga y Desarrollo", 
+    categoria: "Bienestar Natural y Desarrollo Humano", 
+    descripcion: "Clases de meditación, yoga y talleres de crecimiento personal.", 
+    zona: "Fraccionamiento Magallanes", 
+    tel: "7441234567", 
+    img: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=400" 
+},
         ];
 
         window.negocios = negocios;
@@ -304,6 +314,7 @@
     </script>
 </body>
 </html>
+
 
 
 
