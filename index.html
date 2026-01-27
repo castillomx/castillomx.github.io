@@ -21,11 +21,30 @@
         .forecast-item { display: flex; flex-direction: column; align-items: center; padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.1); }
         .forecast-item:last-child { border-right: none; }
         .visit-counter { background: rgba(197, 160, 89, 0.1); border: 1px solid var(--elegant-gold); color: var(--elegant-gold); padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-top: 15px; }
-        /* Estilo Aviso Capitanía */
-        .port-notice { background: rgba(255, 193, 7, 0.1); border-left: 4px solid #ffc107; color: #856404; padding: 15px; border-radius: 12px; font-size: 11px; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
+        
+        /* Pop-up Emergente Capitanía */
+        .port-popup { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 1000; border-left: 5px solid #ffc107; transition: all 0.3s ease; }
+        .port-popup-content { padding: 15px; position: relative; }
+        .close-popup { position: absolute; top: 5px; right: 10px; font-size: 20px; cursor: pointer; color: #94a3b8; }
     </style>
 </head>
 <body>
+
+    <div id="popupCapitania" class="port-popup">
+        <div class="port-popup-content">
+            <span class="close-popup" onclick="this.parentElement.parentElement.style.display='none'">&times;</span>
+            <div class="flex items-center gap-3 mb-2">
+                <div class="bg-amber-500 text-white p-2 rounded-full animate-pulse"><i class="fas fa-anchor text-xs"></i></div>
+                <p class="font-black uppercase text-[10px] text-slate-900">Capitanía de Puerto</p>
+            </div>
+            <p id="tideReport" class="text-[11px] leading-tight text-slate-600">
+                Estado: <strong>Marea Baja (Bajando)</strong><br>
+                Próxima Bajamar: 13:43 h<br>
+                Coeficiente: 53 (Estable)<br>
+                <strong>Puerto Abierto</strong>
+            </p>
+        </div>
+    </div>
 
     <div id="modalQR" class="fixed inset-0 z-[500] hidden flex items-center justify-center p-6 bg-slate-900/95 backdrop-blur-md">
         <div class="bg-white w-full max-w-xs rounded-[2rem] p-10 text-center shadow-2xl text-black">
@@ -96,14 +115,6 @@
     </header>
 
     <main class="max-w-7xl mx-auto -mt-16 px-8 pb-20 relative z-20">
-        <div class="port-notice">
-            <div class="bg-amber-500 text-white p-3 rounded-full animate-pulse shadow-md"><i class="fas fa-anchor"></i></div>
-            <div>
-                <p class="font-black uppercase tracking-wider text-[10px]">Aviso Oficial Capitanía de Puerto - Acapulco</p>
-                <p id="tideReport" class="leading-tight text-black">Estado: <strong>Marea Baja (Bajando)</strong> | Próxima Bajamar: 13:43 h | Coeficiente: 53 (Estable) | <strong>Puerto Abierto</strong> a navegación.</p>
-            </div>
-        </div>
-
         <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
             <h2 id="currentFilterText" class="bg-slate-900 text-white px-10 py-3 rounded-xl shadow-2xl text-[10px] font-black uppercase tracking-[3px] italic">Resultados Destacados</h2>
             <div class="flex flex-wrap justify-center gap-3">
@@ -191,7 +202,9 @@
             { id: 4, nombre: "Venta de Jugos Naturales", categoria: "Gastronomía, Comercio", descripcion: "Jugo de naranja recién exprimido.", zona: "Av. Principal Colosio", tel: "0", img: "img/jugos.jpg" },
             { id: 5, nombre: "Asesorías Contables", categoria: "Asesoría Contable", descripcion: "Trámites ante el SAT y contabilidad.", zona: "Costa Azul, Acapulco.", tel: "7445315790", img: "img/contable.jpg" },
             { id: 6, nombre: "Hotel Villas La Lupita", categoria: "Hoteles y Turismo", descripcion: "Hotel Familiar, habitaciones con todos los servicios...", zona: "Magallanes, Acapulco", tel: "7443508253", img:"img/hvlupita.jpg" },  
-        ];
+            { nombre: "Mishol Hotel & Beach Club", categoria: "Hoteles y Turismo", descripcion: "Ubicado en la carretera rumbo a Barra Vieja, su playa casi exclusiva para sus húspedes lo apunta como una opción para el descanso y la diversión en Familia.", zona: "Carretera Barra Vieja Km 29, Acapulco, Mexico, 39893", tel: "+527442399010", img: "img/hmishol.jpg", social: "Facebook, Instagram, Sitio Web", rating: "5", oferta: "" },
+            { nombre: "Hotel Playa Suites Acapulco", categoria: "Hoteles y Turismo", descripcion: "488 Suites con vista al mar, a 150 metros de la Diana en Acapulco, Gro.", zona: "Av. Costera Miguel Alemán #123, Acapulco, Mexico, 39670", tel: "5217441768321", img: "img/hplayasuites.jpg", social: "Facebook, Instagram, Sitio Web", rating: "5", oferta: "" },
+                ];
 
         window.negocios = negocios;
         let usuarioLogueado = null;
@@ -252,15 +265,13 @@
             });
         }
 
-        // DATOS REALES DE ACAPULCO (Enero 2026)
+        // PRONÓSTICO DE 3 DÍAS
         function inicializarClima() {
             const row = document.getElementById('forecastRow');
             const pronosticoReal = [
                 { dia: 'Hoy', icon: 'fa-sun text-amber-400', temp: '29' },
-                { dia: 'Mar', icon: 'fa-sun text-amber-400', temp: '30' },
-                { dia: 'Mie', icon: 'fa-cloud-showers-heavy text-blue-400', temp: '29' },
-                { dia: 'Jue', icon: 'fa-cloud-rain text-blue-300', temp: '28' },
-                { dia: 'Vie', icon: 'fa-cloud text-slate-300', temp: '28' }
+                { dia: 'Mañana', icon: 'fa-sun text-amber-400', temp: '30' },
+                { dia: 'Mie 28', icon: 'fa-cloud-showers-heavy text-blue-400', temp: '29' }
             ];
             
             row.innerHTML = pronosticoReal.map(f => `
@@ -274,7 +285,6 @@
             document.getElementById('fechaText').innerText = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
         }
 
-        // CONTADOR DE VISITAS REAL (Persistente)
         async function gestionarContador() {
             const key = "guiaaca_pro_v_2026_v2";
             let count = localStorage.getItem(key) || 0;
