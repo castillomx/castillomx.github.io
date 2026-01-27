@@ -119,7 +119,7 @@
         </div>
 
         <div class="flex justify-center gap-4">
-            <button onclick="mostrarNegocios(negocios)" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-3 rounded-xl font-bold text-[10px] uppercase transition-all">Ver Todo el Directorio</button>
+            <button onclick="mostrarNegocios(negocios, 'Resultados Destacados')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-3 rounded-xl font-bold text-[10px] uppercase transition-all">Ver Todo el Directorio</button>
             <button onclick="verClasificados()" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-xl font-bold text-[10px] uppercase shadow-lg transition-all"><i class="fas fa-bullhorn mr-2"></i> Ver Clasificados</button>
         </div>
     </header>
@@ -129,7 +129,7 @@
             <h2 id="currentFilterText" class="bg-slate-900 text-white px-10 py-3 rounded-xl shadow-2xl text-[10px] font-black uppercase tracking-[3px] italic">Resultados Destacados</h2>
             <div class="flex flex-wrap justify-center gap-3">
                 <button onclick="window.open('img/mapa.jpg', '_blank')" class="px-6 py-3 bg-sky-700 text-white rounded-xl font-bold text-[9px] uppercase shadow-lg flex items-center gap-2"><i class="fas fa-map"></i> Mapa Turístico</button>
-                <button onclick="window.open('https://www.google.com/maps/search/playas+y+atractivos+en+acapulco', '_blank')" class="px-6 py-3 bg-amber-500 text-black rounded-xl font-bold text-[9px] uppercase shadow-lg flex items-center gap-2"><i class="fas fa-location-dot"></i> Playas y Sitios</button>
+                <button onclick="window.open('http://googleusercontent.com/maps.google.com/4', '_blank')" class="px-6 py-3 bg-amber-500 text-black rounded-xl font-bold text-[9px] uppercase shadow-lg flex items-center gap-2"><i class="fas fa-location-dot"></i> Playas y Sitios</button>
             </div>
         </div>
         <div id="contenedorNegocios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
@@ -196,7 +196,7 @@
                 tempComms[data.negocioId].push(data);
             });
             window.comentariosDB = tempComms;
-            if(window.mostrarNegocios) window.mostrarNegocios(window.negociosActuales || window.negocios);
+            if(window.mostrarNegocios) window.mostrarNegocios(window.negociosActuales || window.negocios, document.getElementById('currentFilterText').innerText);
         });
 
         onSnapshot(query(collection(db, "clasificados"), orderBy("fecha", "desc")), (snap) => {
@@ -208,13 +208,13 @@
         const negocios = [
             { id: 1, nombre: "Decoraciones Ana Lizbeth", categoria: "Decoración y Eventos Sociales", descripcion: "Globos, eventos sociales, desayunos sorpresa.", zona: "Rinconada Luis Donaldo Colosio", tel: "7442211689", img: "img/analizbeth.jpg" },
             { id: 2, nombre: "Papelería Paty", categoria: "Comercio", descripcion: "Artículos de papelería, impresiones, copias.", zona: "Granjas del Marqués", tel: "7444433601", img: "img/papepaty.jpg" },
-            { nombre: "Papeleria Confi", categoria: "Comercio", descripcion: "venta de articulos de papeleria y escolar , copias, impresiones, escaneos.", zona: "Mártires de La Democracia S/N, Granjas del Marqués, 39890 Acapulco de Juárez, Gro.", tel: "7444296350", img: "img/papeconfi.jpg", social: "", rating: "5", oferta: "" },
-            { nombre: "Peluqueria mercado de la Colosio", categoria: "Comercio", descripcion: "cortes de cabello.", zona: "Mártires de La Democracia, Granjas del Marqués, 39890 Acapulco de Juárez, Gro.", tel: "0", img: "img/peluquero.jpg", social: "", rating: "4", oferta: "" },
-            { nombre: "Venta de jugo de naranja fresca", categoria: "Gastronomia", descripcion: "venta de jugo de naranja en bolsa o vaso sobre el camellon en la av. principal ", zona: "Luis Donaldo Colosio, Granjas del Marqués, 39890 Acapulco de Juárez, Gro.", tel: "0", img: "img/jugos.jpg", social: "", rating: "5", oferta: "" },
-            { nombre: "Asesorias Contables ", categoria: "Asesoría Contable", descripcion: "Ayudar a las personas con trámites ante el SAT , declaración de impuestos y la contabilidad de sus negocios.", zona: "Juan Ruiz de Alarcón 8, Pozo de la Nacion, 39300 Acapulco de Juárez, Gro.", tel: "7445315790", img: "img/contable.jpg", social: "No, solo contacto por WhatsApp", rating: "5", oferta: "" },
-            { nombre: "Hotel Villas La Lupita", categoria: "Hoteles y Turismo", descripcion: "Hotel familiar, habitaciones con todos los servicios a/c, ventilador, T.V con cable, estacionamiento, a una cuadra de la costera y zona de playas.", zona: "Anton de Alaminos #232 Fraccionamiento Magallanes, Acapulco, Mexico, 39670", tel: "+5217443508253", img: "img/hvlupita.jpg", social: "Facebook", rating: "5", oferta: "" },
-            { nombre: "Mishol Hotel & Beach Club", categoria: "Hoteles y Turismo", descripcion: "Ubicado en la carretera rumbo a Barra Vieja, su playa casi exclusiva para sus húspedes lo apunta como una opción para el descanso y la diversión en Familia.", zona: "Carretera Barra Vieja Km 29, Acapulco, Mexico, 39893", tel: "+527442399010", img: "img/hmishol.jpg", social: "Facebook, Instagram, Sitio Web", rating: "5", oferta: "" },
-            { nombre: "Hotel Playa Suites Acapulco", categoria: "Hoteles y Turismo", descripcion: "488 Suites con vista al mar, a 150 metros de la Diana en Acapulco, Gro.", zona: "Av. Costera Miguel Alemán #123, Acapulco, Mexico, 39670", tel: "5217441768321", img: "img/hplayasuites.jpg", social: "Facebook, Instagram, Sitio Web", rating: "5", oferta: "" },
+            { id: 3, nombre: "Papeleria Confi", categoria: "Comercio", descripcion: "venta de articulos de papeleria y escolar , copias, impresiones, escaneos.", zona: "Mártires de La Democracia S/N, Granjas del Marqués", tel: "7444296350", img: "img/papeconfi.jpg" },
+            { id: 4, nombre: "Peluqueria mercado de la Colosio", categoria: "Comercio", descripcion: "cortes de cabello.", zona: "Mártires de La Democracia, Granjas del Marqués", tel: "0", img: "img/peluquero.jpg" },
+            { id: 5, nombre: "Venta de jugo de naranja fresca", categoria: "Gastronomia", descripcion: "venta de jugo de naranja en bolsa o vaso sobre el camellon.", zona: "Luis Donaldo Colosio, Granjas del Marqués", tel: "0", img: "img/jugos.jpg" },
+            { id: 6, nombre: "Asesorias Contables ", categoria: "Asesoría Contable", descripcion: "Ayudar a las personas con trámites ante el SAT , declaración de impuestos.", zona: "Juan Ruiz de Alarcón 8, Pozo de la Nacion", tel: "7445315790", img: "img/contable.jpg" },
+            { id: 7, nombre: "Hotel Villas La Lupita", categoria: "Hoteles y Turismo", descripcion: "Hotel familiar, habitaciones con todos los servicios.", zona: "Fraccionamiento Magallanes, Acapulco", tel: "7443508253", img: "img/hvlupita.jpg" },
+            { id: 8, nombre: "Mishol Hotel & Beach Club", categoria: "Hoteles y Turismo", descripcion: "Ubicado en la carretera rumbo a Barra Vieja.", zona: "Carretera Barra Vieja Km 29, Acapulco", tel: "7442399010", img: "img/hmishol.jpg" },
+            { id: 9, nombre: "Hotel Playa Suites Acapulco", categoria: "Hoteles y Turismo", descripcion: "488 Suites con vista al mar.", zona: "Av. Costera Miguel Alemán #123, Acapulco", tel: "7441768321", img: "img/hplayasuites.jpg" },
         ];
 
         window.negocios = negocios;
@@ -224,7 +224,7 @@
         function simularLogin() {
             usuarioLogueado = { nombre: "Usuario Acapulco Pro" };
             document.getElementById('loginBtn').innerHTML = `<i class="fas fa-user-check mr-2"></i> ${usuarioLogueado.nombre}`;
-            alert("Has accedido.");
+            alert("Has accedido con Google.");
         }
 
         async function agregarComentario(negocioId) {
@@ -245,26 +245,44 @@
             contenedor.innerHTML = '';
             document.getElementById('currentFilterText').innerText = label;
             
+            const esClasificado = label.toLowerCase().includes("clasificado");
+
             lista.forEach((n, index) => {
-                const listadoComms = window.comentariosDB[n.id || n.nombre] || [];
+                const idUnico = n.id || n.nombre;
+                const listadoComms = window.comentariosDB[idUnico] || [];
                 const hasWA = n.tel && n.tel !== "0";
-                
-                // CORRECCIÓN: Generación de URL de mapa dinámica
-                const busquedaMapa = encodeURIComponent(`${n.nombre} ${n.zona} Acapulco`);
-                const mapUrl = `https://www.google.com/maps/search/${busquedaMapa}`;
+                const busquedaMapa = encodeURIComponent(`${n.nombre} Acapulco`);
+                const mapUrl = `http://googleusercontent.com/maps.google.com/5{busquedaMapa}`;
+
+                let botonesHTML = esClasificado ? `
+                    <div class="flex justify-center mb-4 text-white">
+                        ${hasWA ? `<a href="https://wa.me/52${n.tel}" target="_blank" class="bg-[#25D366] py-3 rounded-lg font-bold text-[10px] text-center uppercase shadow-sm w-full"><i class="fab fa-whatsapp mr-2"></i> WhatsApp</a>` : '<span class="bg-slate-100 text-slate-400 py-3 rounded-lg font-bold text-[10px] text-center w-full">Sin Tel</span>'}
+                    </div>` : `
+                    <div class="grid grid-cols-3 gap-2 mb-4 text-white">
+                        ${hasWA ? `<a href="https://wa.me/52${n.tel}" target="_blank" class="bg-[#25D366] py-2 rounded-lg font-bold text-[9px] text-center uppercase shadow-sm">WhatsApp</a>` : '<span class="bg-slate-100 text-slate-400 py-2 rounded-lg font-bold text-[9px] text-center">Sin Tel</span>'}
+                        <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-[#8b5e3c] py-2 rounded-lg font-bold text-[9px] uppercase">QR</button>
+                        <a href="${mapUrl}" target="_blank" class="bg-blue-600 py-2 rounded-lg font-bold text-[9px] text-center uppercase shadow-sm">Mapa</a>
+                    </div>`;
 
                 contenedor.innerHTML += `
                     <article class="business-card text-black">
                         <div class="h-48 overflow-hidden bg-slate-100"><img src="${n.img}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=400'"></div>
                         <div class="p-6 flex flex-col flex-grow bg-white">
-                            <span class="text-[8px] font-bold uppercase text-slate-500 bg-slate-100 px-2 py-1 rounded w-fit mb-3">${n.categoria}</span>
+                            <span class="text-[8px] font-bold uppercase text-slate-500 bg-slate-100 px-2 py-1 rounded w-fit mb-3">${n.categoria || 'Servicio'}</span>
                             <h3 class="text-lg font-extrabold mb-2 uppercase leading-tight">${n.nombre}</h3>
-                            <p class="business-desc italic">${n.descripcion}</p>
-                            <div class="flex items-center gap-2 text-slate-400 text-[10px] mb-4"><i class="fas fa-map-marker-alt text-amber-600"></i><span>${n.zona}</span></div>
-                            <div class="grid grid-cols-3 gap-2 mb-4 text-white">
-                                ${hasWA ? `<a href="https://wa.me/52${n.tel}" target="_blank" class="bg-[#25D366] py-2 rounded-lg font-bold text-[9px] text-center uppercase shadow-sm">WhatsApp</a>` : '<span class="bg-slate-100 text-slate-400 py-2 rounded-lg font-bold text-[9px] text-center">Sin Tel</span>'}
-                                <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-[#8b5e3c] py-2 rounded-lg font-bold text-[9px] uppercase">QR</button>
-                                <a href="${mapUrl}" target="_blank" class="bg-blue-600 py-2 rounded-lg font-bold text-[9px] text-center uppercase shadow-sm"><i class="fas fa-location-dot"></i> Mapa</a>
+                            <p class="business-desc italic">${n.descripcion || n.oficio || ''}</p>
+                            <div class="flex items-center gap-2 text-slate-400 text-[10px] mb-4"><i class="fas fa-map-marker-alt text-amber-600"></i><span>${n.zona || 'Acapulco'}</span></div>
+                            
+                            ${botonesHTML}
+
+                            <div class="mt-auto border-t pt-4">
+                                <div id="comments-${idUnico}" class="max-h-32 overflow-y-auto mb-3">
+                                    ${listadoComms.map(c => `<div class="comment-box"><strong>${c.autor}:</strong> ${c.texto}</div>`).join('')}
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="text" id="input-${idUnico}" placeholder="Escribe un comentario..." class="flex-grow p-2 text-[10px] border rounded-lg outline-none">
+                                    <button onclick="agregarComentario('${idUnico}')" class="bg-slate-900 text-white px-3 rounded-lg"><i class="fas fa-paper-plane text-[10px]"></i></button>
+                                </div>
                             </div>
                         </div>
                     </article>`;
@@ -272,12 +290,7 @@
                 if ((index + 1) % 3 === 0) {
                     contenedor.innerHTML += `
                         <article class="ad-card-native p-4 flex items-center justify-center min-h-[350px]">
-                            <ins class="adsbygoogle"
-                                 style="display:block; width:100%"
-                                 data-ad-format="fluid"
-                                 data-ad-layout-key="-fb+5w+4e-db+86"
-                                 data-ad-client="ca-pub-1151639786767658"
-                                 data-ad-slot="auto"></ins>
+                            <ins class="adsbygoogle" style="display:block; width:100%" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86" data-ad-client="ca-pub-1151639786767658" data-ad-slot="auto"></ins>
                             <script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>
                         </article>`;
                 }
@@ -287,22 +300,12 @@
         function inicializarClima() {
             const row = document.getElementById('forecastRow');
             const hoy = new Date();
-            const pronosticoReal = [
-                { icon: 'fa-sun text-amber-400', temp: '29', clima: 'Soleado' },
-                { icon: 'fa-sun text-amber-400', temp: '30', clima: 'Soleado' },
-                { icon: 'fa-cloud-showers-heavy text-blue-400', temp: '29', clima: 'Lluvia' }
-            ];
-            
+            const pronosticoReal = [{ icon: 'fa-sun text-amber-400', temp: '29' }, { icon: 'fa-sun text-amber-400', temp: '30' }, { icon: 'fa-cloud text-blue-400', temp: '29' }];
             row.innerHTML = pronosticoReal.map((f, i) => {
                 const d = new Date(); d.setDate(hoy.getDate() + i);
-                const etiqueta = i === 0 ? 'Hoy' : d.toLocaleDateString('es-MX', {weekday: 'short'});
-                return `<div class="forecast-item"><span class="text-[7px] font-black uppercase opacity-70">${etiqueta}</span><i class="fas ${f.icon} text-[10px] my-1"></i><span class="text-[8px] font-bold">${f.temp}°C</span></div>`;
+                return `<div class="forecast-item"><span class="text-[7px] font-black uppercase opacity-70">${i === 0 ? 'Hoy' : d.toLocaleDateString('es-MX', {weekday: 'short'})}</span><i class="fas ${f.icon} text-[10px] my-1"></i><span class="text-[8px] font-bold">${f.temp}°C</span></div>`;
             }).join('');
-            
-            if(pronosticoReal[0].clima === 'Soleado') {
-                document.getElementById('banderaCapitania').style.background = 'blue';
-                document.getElementById('climaMaritimo').innerText = 'Buenas condiciones';
-            }
+            document.getElementById('banderaCapitania').style.background = 'blue';
             document.getElementById('fechaText').innerText = hoy.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
         }
 
@@ -324,17 +327,12 @@
         window.abrirModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.remove('hidden');
         window.cerrarModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.add('hidden');
         window.verClasificados = () => mostrarNegocios(window.listaClasificadosRealTime || [], "Clasificados Actualizados");
-        function generarQR(t, n) { 
-            document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent('https://wa.me/52'+t)}`; 
-            document.getElementById('qrNombre').innerText = n; 
-            document.getElementById('modalQR').classList.remove('hidden'); 
-        }
+        function generarQR(t, n) { document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent('https://wa.me/52'+t)}`; document.getElementById('qrNombre').innerText = n; document.getElementById('modalQR').classList.remove('hidden'); }
         function cerrarQR() { document.getElementById('modalQR').classList.add('hidden'); }
 
         inicializarClima();
         gestionarContador();
-        mostrarNegocios(negocios);
+        mostrarNegocios(negocios, 'Resultados Destacados');
     </script>
 </body>
 </html>
-
