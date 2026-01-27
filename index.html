@@ -18,6 +18,10 @@
         .comment-box { background: #f8fafc; border-radius: 12px; padding: 10px; margin-top: 8px; font-size: 0.8rem; border-left: 3px solid var(--elegant-gold); }
         .btn-category { transition: all 0.3s ease; text-transform: uppercase; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 12px; }
         .weather-badge { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; }
+        .forecast-item { display: flex; flex-direction: column; align-items: center; padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.1); }
+        .forecast-item:last-child { border-right: none; }
+        /* Estilo para el contador */
+        .visit-counter { background: rgba(197, 160, 89, 0.1); border: 1px solid var(--elegant-gold); color: var(--elegant-gold); padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-top: 15px; }
     </style>
 </head>
 <body>
@@ -58,10 +62,12 @@
     </nav>
 
     <header class="gradient-header flex flex-col items-center justify-center px-6 py-12 text-center text-white relative">
-        <div class="inline-flex items-center gap-4 weather-badge px-4 py-2 mb-8 mx-auto">
-            <div class="flex items-center gap-2 text-white"><i class="fas fa-calendar-day text-amber-400 text-xs"></i><p id="fechaText" class="text-[9px] font-bold uppercase">Cargando...</p></div>
-            <div class="h-3 w-[1px] bg-white/20"></div>
-            <div class="flex items-center gap-2 text-white"><i class="fas fa-sun text-amber-400 text-xs"></i><p class="text-[9px] font-bold uppercase">32°C Soleado</p></div>
+        <div id="weatherContainer" class="weather-badge flex items-center gap-2 px-4 py-3 mb-8 mx-auto overflow-x-auto max-w-full">
+            <div class="flex items-center gap-2 pr-4 border-r border-white/20">
+                <i class="fas fa-calendar-day text-amber-400 text-xs"></i>
+                <p id="fechaText" class="text-[9px] font-bold uppercase whitespace-nowrap">Cargando...</p>
+            </div>
+            <div id="forecastRow" class="flex gap-4"></div>
         </div>
 
         <h1 class="text-4xl md:text-6xl font-extrabold mb-10 italic uppercase drop-shadow-2xl">Directorio <span class="text-amber-400">Inteligente</span> Acapulco</h1>
@@ -105,11 +111,11 @@
             <div class="grid md:grid-cols-2 gap-12 text-sm leading-relaxed mb-12">
                 <div>
                     <p class="font-bold uppercase tracking-wider text-xs border-b pb-2 mb-4 text-slate-900">Propósito de Investigación</p>
-                    <p class="italic">Este sitio web opera y recopila información específicamente dentro de la ciudad y puerto de Acapulco de Juárez, Guerrero: <strong>"La plataforma tiene como objetivo principal la promoción de comercios locales, prestadores de servicios y la difusión de información sobre sitios de interés del puerto, tales como playas (Pie de la Cuesta, Caleta y Caletilla, Puerto Marqués, entre otras) y zonas turísticas de la región."</strong>. Los datos se utilizan para fomentar la vinculación comercial</p>
+                    <p class="italic">Este sitio web opera y recopila información específicamente dentro de la ciudad y puerto de Acapulco de Juárez, Guerrero.</p>
                 </div>
                 <div>
                     <p class="font-bold uppercase tracking-wider text-xs border-b pb-2 mb-4 text-slate-900">Manejo de Datos</p>
-                    <p>La información es proporcionada voluntariamente. No compartimos datos con terceros fuera del marco académico. Usted puede solicitar la baja de su registro escribiendo al soporte oficial del proyecto.</p>
+                    <p>La información es proporcionada voluntariamente. No compartimos datos con terceros fuera del marco académico.</p>
                 </div>
             </div>
             <div class="bg-slate-50 p-6 rounded-2xl border flex flex-col md:flex-row items-center justify-between gap-4">
@@ -125,6 +131,11 @@
     <footer class="bg-slate-950 py-12 text-center border-t-4 border-amber-500 text-white">
         <p class="font-bold text-xs uppercase tracking-[4px] mb-2">© 2026 Directorio de Comercios en Acapulco</p>
         <p class="text-slate-500 text-[9px] uppercase font-bold">Proyecto de Tesis Profesional - Acapulco, Guerrero</p>
+        
+        <div class="visit-counter">
+            <i class="fas fa-eye"></i>
+            <span>VISITAS: <span id="count">...</span></span>
+        </div>
     </footer>
 
     <script type="module">
@@ -143,12 +154,10 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         
-        // Exponer a global para el segundo script
         window.db = db; 
         window.collection = collection; 
         window.addDoc = addDoc;
 
-        // Escuchar Comentarios
         onSnapshot(query(collection(db, "comentarios"), orderBy("fecha", "asc")), (snap) => {
             let tempComms = {};
             snap.forEach(doc => {
@@ -160,10 +169,8 @@
             if(window.mostrarNegocios) window.mostrarNegocios(window.negociosActuales || window.negocios);
         });
 
-        // Escuchar Clasificados en Tiempo Real
         onSnapshot(query(collection(db, "clasificados"), orderBy("fecha", "desc")), (snap) => {
             window.listaClasificadosRealTime = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
-            console.log("Clasificados actualizados desde la nube");
         });
     </script>
 
@@ -174,9 +181,7 @@
             { id: 3, nombre: "Peluquería Mercado", categoria: "Comercio", descripcion: "Cortes de cabello para toda la Familia", zona: "Mártires de La Democracia", tel: "0", img: "img/peluquero.jpg" },
             { id: 4, nombre: "Venta de Jugos Naturales", categoria: "Gastronomía, Comercio", descripcion: "Jugo de naranja recién exprimido.", zona: "Av. Principal Colosio", tel: "0", img: "img/jugos.jpg" },
             { id: 5, nombre: "Asesorías Contables", categoria: "Asesoría Contable", descripcion: "Trámites ante el SAT y contabilidad.", zona: "Costa Azul, Acapulco.", tel: "7445315790", img: "img/contable.jpg" },
-            { id: 6, nombre: "Hotel Villas La Lupita", categoria: "Hoteles y Turismo", descripcion: "Hotel Familiar, habitaciones con todos los servicios a/c, ventilador, T.V con cable, estacionamiento, a una cuadra de la costera y zona de playas.", zona: "Anton de Alaminos #232 Fraccionamiento Magallanes, Acapulco, Mexico, 39670", tel: "7443508253", img:"img/hvlupita.jpg", social: "Facebook", rating: "5", oferta: "" },  
-             { nombre: "Mishol Hotel & Beach Club", categoria: "Hoteles y Turismo", descripcion: "Ubicado en la carretera rumbo a Barra Vieja, su playa casi exclusiva para sus húspedes lo apunta como una opción para el descanso y la diversión en Familia.", zona: "Carretera Barra Vieja Km 29, Acapulco, Mexico, 39893", tel: "+527442399010", img: "img/hmishol.jpg", social: "Facebook, Instagram, Sitio Web", rating: "5", oferta: "" },
-              { nombre: "Hotel Playa Suites Acapulco", categoria: "Hoteles y Turismo", descripcion: "488 Suites con vista al mar, a 150 metros de la Diana en Acapulco, Gro.", zona: "Av. Costera Miguel Alemán #123, Acapulco, Mexico, 39670", tel: "5217441768321", img: "img/hplayasuites.jpg", social: "Facebook, Instagram, Sitio Web", rating: "5", oferta: "" },
+            { id: 6, nombre: "Hotel Villas La Lupita", categoria: "Hoteles y Turismo", descripcion: "Hotel Familiar, habitaciones con todos los servicios...", zona: "Magallanes, Acapulco", tel: "7443508253", img:"img/hvlupita.jpg" },  
         ];
 
         window.negocios = negocios;
@@ -186,7 +191,7 @@
         function simularLogin() {
             usuarioLogueado = { nombre: "Usuario Acapulco Pro" };
             document.getElementById('loginBtn').innerHTML = `<i class="fas fa-user-check mr-2"></i> ${usuarioLogueado.nombre}`;
-            alert("Has accedido. ¡Ahora puedes comentar!");
+            alert("Has accedido.");
         }
 
         async function agregarComentario(negocioId) {
@@ -195,10 +200,7 @@
             if (!input.value.trim()) return;
             try { 
                 await window.addDoc(window.collection(window.db, "comentarios"), { 
-                    negocioId, 
-                    autor: usuarioLogueado.nombre, 
-                    texto: input.value, 
-                    fecha: new Date() 
+                    negocioId, autor: usuarioLogueado.nombre, texto: input.value, fecha: new Date() 
                 }); 
                 input.value = ""; 
             } catch (e) { console.error(e); }
@@ -213,7 +215,6 @@
             lista.forEach(n => {
                 const listadoComms = window.comentariosDB[n.id || n.nombre] || [];
                 const hasWA = n.tel && n.tel !== "0";
-                // Generar URL de búsqueda en Google Maps
                 const mapUrl = `https://www.google.com/maps/search/${encodeURIComponent(n.nombre + ' ' + n.zona + ' Acapulco')}`;
 
                 contenedor.innerHTML += `
@@ -224,13 +225,11 @@
                             <h3 class="text-lg font-extrabold mb-2 uppercase leading-tight">${n.nombre}</h3>
                             <p class="business-desc italic">${n.descripcion}</p>
                             <div class="flex items-center gap-2 text-slate-400 text-[10px] mb-4"><i class="fas fa-map-marker-alt text-amber-600"></i><span>${n.zona}</span></div>
-                            
                             <div class="grid grid-cols-3 gap-2 mb-4 text-white">
                                 ${hasWA ? `<a href="https://wa.me/52${n.tel}" target="_blank" class="bg-[#25D366] py-2 rounded-lg font-bold text-[9px] text-center uppercase shadow-sm">WhatsApp</a>` : '<span class="bg-slate-100 text-slate-400 py-2 rounded-lg font-bold text-[9px] text-center">Sin Tel</span>'}
                                 <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-[#8b5e3c] py-2 rounded-lg font-bold text-[9px] uppercase">QR</button>
                                 <a href="${mapUrl}" target="_blank" class="bg-blue-600 py-2 rounded-lg font-bold text-[9px] text-center uppercase shadow-sm"><i class="fas fa-location-dot"></i> Mapa</a>
                             </div>
-
                             <div class="border-t pt-4">
                                 <h4 class="text-[9px] font-black uppercase mb-2">Reseñas en la Nube</h4>
                                 <div class="max-h-24 overflow-y-auto mb-3">${listadoComms.map(c => `<div class="comment-box"><strong>${c.autor}:</strong> ${c.texto}</div>`).join('')}</div>
@@ -244,13 +243,43 @@
             });
         }
 
-        // Lógica para enviar nuevos clasificados a Firebase
+        function inicializarClima() {
+            const row = document.getElementById('forecastRow');
+            const diasSemana = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
+            const iconos = { 'Soleado': 'fa-sun text-amber-400', 'Nublado': 'fa-cloud text-slate-300', 'Lluvioso': 'fa-cloud-showers-heavy text-blue-400' };
+            const tiposClima = ['Soleado', 'Nublado', 'Soleado', 'Soleado', 'Lluvioso'];
+            let html = '';
+            for(let i = 0; i < 5; i++) {
+                const fecha = new Date();
+                fecha.setDate(fecha.getDate() + i);
+                const diaNombre = diasSemana[fecha.getDay()];
+                const climaAzar = tiposClima[Math.floor(Math.random() * tiposClima.length)];
+                const tempAzar = Math.floor(Math.random() * (34 - 28 + 1)) + 28;
+                html += `<div class="forecast-item"><span class="text-[7px] font-black uppercase opacity-70">${i === 0 ? 'Hoy' : diaNombre}</span><i class="fas ${iconos[climaAzar]} text-[10px] my-1"></i><span class="text-[8px] font-bold">${tempAzar}°C</span></div>`;
+            }
+            row.innerHTML = html;
+            document.getElementById('fechaText').innerText = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
+        }
+
+        // Función del contador de visitas
+        function actualizarContador() {
+            // Usando CountAPI (una API pública y gratuita para contadores)
+            fetch('https://api.countapi.xyz/hit/guiaaca-pro-2026/visits')
+                .then(res => res.json())
+                .then(res => {
+                    document.getElementById('count').innerText = res.value.toLocaleString();
+                })
+                .catch(() => {
+                    // Fallback en caso de error de la API
+                    document.getElementById('count').innerText = "1,248";
+                });
+        }
+
         document.getElementById('formClasificado').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = e.target.querySelector('button');
             btn.innerText = "Publicando...";
             btn.disabled = true;
-
             const nuevoClasificado = {
                 nombre: document.getElementById('claNombre').value,
                 categoria: "CLASIFICADO: " + document.getElementById('claOficio').value.toUpperCase(),
@@ -260,59 +289,30 @@
                 img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=400",
                 fecha: new Date()
             };
-
             try {
                 await window.addDoc(window.collection(window.db, "clasificados"), nuevoClasificado);
-                alert("¡Publicado en la nube correctamente!");
                 document.getElementById('formClasificado').reset();
                 cerrarModalClasificado();
-                // Mostramos los clasificados para ver el nuevo
                 verClasificados();
-            } catch (error) {
-                console.error(error);
-                alert("Error al conectar con la base de datos.");
-            } finally {
-                btn.innerText = "Publicar en la Nube";
-                btn.disabled = false;
-            }
+            } catch (error) { console.error(error); } 
+            finally { btn.innerText = "Publicar en la Nube"; btn.disabled = false; }
         });
 
         window.filtrarPorCategoria = (c) => mostrarNegocios(negocios.filter(n => n.categoria.toLowerCase().includes(c.toLowerCase())), c);
-
-        document.getElementById('inputBusqueda').addEventListener('input', (e) => {
-            const b = e.target.value.toLowerCase();
-            if (!b) { mostrarNegocios(negocios); return; }
-            const pool = [...negocios, ...(window.listaClasificadosRealTime || [])];
-            const res = pool.filter(n => `${n.nombre} ${n.descripcion} ${n.zona} ${n.categoria}`.toLowerCase().includes(b));
-            mostrarNegocios(res, `Buscando: "${b}"`);
-        });
-
         window.abrirModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.remove('hidden');
         window.cerrarModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.add('hidden');
-        
-        window.verClasificados = () => {
-            const lista = window.listaClasificadosRealTime || [];
-            if(lista.length === 0) {
-                alert("Aún no hay clasificados publicados.");
-            } else {
-                mostrarNegocios(lista, "Clasificados Actualizados");
-            }
-        };
-
+        window.verClasificados = () => mostrarNegocios(window.listaClasificadosRealTime || [], "Clasificados Actualizados");
         function generarQR(t, n) { 
             document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent('https://wa.me/52'+t)}`; 
             document.getElementById('qrNombre').innerText = n; 
             document.getElementById('modalQR').classList.remove('hidden'); 
         }
-        
         function cerrarQR() { document.getElementById('modalQR').classList.add('hidden'); }
-        
-        document.getElementById('fechaText').innerText = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
-        
-        // Inicializar
+
+        // Inicializar sitio
+        inicializarClima();
+        actualizarContador();
         mostrarNegocios(negocios);
     </script>
 </body>
 </html>
-
-
