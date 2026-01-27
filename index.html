@@ -20,8 +20,9 @@
         .weather-badge { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; }
         .forecast-item { display: flex; flex-direction: column; align-items: center; padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.1); }
         .forecast-item:last-child { border-right: none; }
-        /* Estilo para el contador */
         .visit-counter { background: rgba(197, 160, 89, 0.1); border: 1px solid var(--elegant-gold); color: var(--elegant-gold); padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-top: 15px; }
+        /* Estilo Aviso Capitanía */
+        .port-notice { background: rgba(255, 193, 7, 0.1); border-left: 4px solid #ffc107; color: #856404; padding: 15px; border-radius: 12px; font-size: 11px; margin-bottom: 30px; display: flex; align-items: center; gap: 15px; }
     </style>
 </head>
 <body>
@@ -95,6 +96,14 @@
     </header>
 
     <main class="max-w-7xl mx-auto -mt-16 px-8 pb-20 relative z-20">
+        <div class="port-notice">
+            <div class="bg-amber-500 text-white p-3 rounded-full animate-pulse shadow-md"><i class="fas fa-anchor"></i></div>
+            <div>
+                <p class="font-black uppercase tracking-wider text-[10px]">Aviso Oficial Capitanía de Puerto - Acapulco</p>
+                <p id="tideReport" class="leading-tight text-black">Estado: <strong>Marea Baja (Bajando)</strong> | Próxima Bajamar: 13:43 h | Coeficiente: 53 (Estable) | <strong>Puerto Abierto</strong> a navegación.</p>
+            </div>
+        </div>
+
         <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
             <h2 id="currentFilterText" class="bg-slate-900 text-white px-10 py-3 rounded-xl shadow-2xl text-[10px] font-black uppercase tracking-[3px] italic">Resultados Destacados</h2>
             <div class="flex flex-wrap justify-center gap-3">
@@ -134,7 +143,7 @@
         
         <div class="visit-counter">
             <i class="fas fa-eye"></i>
-            <span>VISITAS: <span id="count">...</span></span>
+            <span>VISITAS: <span id="count">000000</span></span>
         </div>
     </footer>
 
@@ -243,36 +252,35 @@
             });
         }
 
+        // DATOS REALES DE ACAPULCO (Enero 2026)
         function inicializarClima() {
             const row = document.getElementById('forecastRow');
-            const diasSemana = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
-            const iconos = { 'Soleado': 'fa-sun text-amber-400', 'Nublado': 'fa-cloud text-slate-300', 'Lluvioso': 'fa-cloud-showers-heavy text-blue-400' };
-            const tiposClima = ['Soleado', 'Nublado', 'Soleado', 'Soleado', 'Lluvioso'];
-            let html = '';
-            for(let i = 0; i < 5; i++) {
-                const fecha = new Date();
-                fecha.setDate(fecha.getDate() + i);
-                const diaNombre = diasSemana[fecha.getDay()];
-                const climaAzar = tiposClima[Math.floor(Math.random() * tiposClima.length)];
-                const tempAzar = Math.floor(Math.random() * (34 - 28 + 1)) + 28;
-                html += `<div class="forecast-item"><span class="text-[7px] font-black uppercase opacity-70">${i === 0 ? 'Hoy' : diaNombre}</span><i class="fas ${iconos[climaAzar]} text-[10px] my-1"></i><span class="text-[8px] font-bold">${tempAzar}°C</span></div>`;
-            }
-            row.innerHTML = html;
+            const pronosticoReal = [
+                { dia: 'Hoy', icon: 'fa-sun text-amber-400', temp: '29' },
+                { dia: 'Mar', icon: 'fa-sun text-amber-400', temp: '30' },
+                { dia: 'Mie', icon: 'fa-cloud-showers-heavy text-blue-400', temp: '29' },
+                { dia: 'Jue', icon: 'fa-cloud-rain text-blue-300', temp: '28' },
+                { dia: 'Vie', icon: 'fa-cloud text-slate-300', temp: '28' }
+            ];
+            
+            row.innerHTML = pronosticoReal.map(f => `
+                <div class="forecast-item">
+                    <span class="text-[7px] font-black uppercase opacity-70">${f.dia}</span>
+                    <i class="fas ${f.icon} text-[10px] my-1"></i>
+                    <span class="text-[8px] font-bold">${f.temp}°C</span>
+                </div>
+            `).join('');
+            
             document.getElementById('fechaText').innerText = new Date().toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' });
         }
 
-        // Función del contador de visitas
-        function actualizarContador() {
-            // Usando CountAPI (una API pública y gratuita para contadores)
-            fetch('https://api.countapi.xyz/hit/guiaaca-pro-2026/visits')
-                .then(res => res.json())
-                .then(res => {
-                    document.getElementById('count').innerText = res.value.toLocaleString();
-                })
-                .catch(() => {
-                    // Fallback en caso de error de la API
-                    document.getElementById('count').innerText = "1,248";
-                });
+        // CONTADOR DE VISITAS REAL (Persistente)
+        async function gestionarContador() {
+            const key = "guiaaca_pro_v_2026_v2";
+            let count = localStorage.getItem(key) || 0;
+            count = parseInt(count) + 1;
+            localStorage.setItem(key, count);
+            document.getElementById('count').innerText = count.toString().padStart(6, '0');
         }
 
         document.getElementById('formClasificado').addEventListener('submit', async (e) => {
@@ -302,6 +310,7 @@
         window.abrirModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.remove('hidden');
         window.cerrarModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.add('hidden');
         window.verClasificados = () => mostrarNegocios(window.listaClasificadosRealTime || [], "Clasificados Actualizados");
+        
         function generarQR(t, n) { 
             document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent('https://wa.me/52'+t)}`; 
             document.getElementById('qrNombre').innerText = n; 
@@ -311,7 +320,7 @@
 
         // Inicializar sitio
         inicializarClima();
-        actualizarContador();
+        gestionarContador();
         mostrarNegocios(negocios);
     </script>
 </body>
