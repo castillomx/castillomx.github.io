@@ -66,7 +66,7 @@
                 <input type="text" id="claOficio" placeholder="Oficio (ej. Carpintero, Técnico)" class="w-full p-3 border rounded-xl outline-none" required>
                 <textarea id="claDesc" placeholder="Describe tus servicios..." class="w-full p-3 border rounded-xl outline-none h-24" required></textarea>
                 <input type="tel" id="claTel" placeholder="WhatsApp (10 dígitos)" class="w-full p-3 border rounded-xl outline-none" required>
-                <button type="submit" class="w-full py-4 bg-purple-700 text-white rounded-xl font-bold uppercase shadow-lg hover:bg-purple-800 transition-all text-xs">Publicar en la Nube</button>
+                <button type="submit" id="btnPublicar" class="w-full py-4 bg-purple-700 text-white rounded-xl font-bold uppercase shadow-lg hover:bg-purple-800 transition-all text-xs">Publicar en la Nube</button>
             </form>
         </div>
     </div>
@@ -201,10 +201,14 @@
 
         onSnapshot(query(collection(db, "clasificados"), orderBy("fecha", "desc")), (snap) => {
             window.listaClasificadosRealTime = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
+            // Si el usuario está viendo los clasificados, actualiza la vista inmediatamente
+            if(document.getElementById('currentFilterText').innerText === "Clasificados Actualizados") {
+                window.verClasificados();
+            }
         });
     </script>
 
-    <script>       
+    <script>        
         const negocios = [
             { id: 1, nombre: "Decoraciones Ana Lizbeth", categoria: "Decoración y Eventos Sociales", descripcion: "Globos, eventos sociales, desayunos sorpresa.", zona: "Rinconada Luis Donaldo Colosio", tel: "7442211689", img: "img/analizbeth.jpg" },
             { id: 2, nombre: "Papelería Paty", categoria: "Comercio", descripcion: "Artículos de papelería, impresiones, copias.", zona: "Granjas del Marqués", tel: "7444433601", img: "img/papepaty.jpg" },
@@ -252,7 +256,6 @@
                 const listadoComms = window.comentariosDB[idUnico] || [];
                 const hasWA = n.tel && n.tel !== "0";
                 
-                // ARREGLO DE URL DE MAPA: Uso de URL oficial de Google Maps Search
                 const queryMapa = encodeURIComponent(`${n.nombre} ${n.zona} Acapulco`);
                 const mapUrl = `https://www.google.com/maps/search/?api=1&query=${queryMapa}`;
 
@@ -298,6 +301,39 @@
                 }
             });
         }
+
+        // --- LÓGICA PARA GUARDAR EN FIREBASE ---
+        document.getElementById('formClasificado').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btnPublicar');
+            btn.innerText = "Publicando...";
+            btn.disabled = true;
+
+            const nuevoClasificado = {
+                nombre: document.getElementById('claNombre').value,
+                oficio: document.getElementById('claOficio').value,
+                descripcion: document.getElementById('claDesc').value,
+                tel: document.getElementById('claTel').value,
+                categoria: "Clasificado",
+                zona: "Acapulco, Gro.",
+                fecha: new Date(),
+                img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=400"
+            };
+
+            try {
+                await window.addDoc(window.collection(window.db, "clasificados"), nuevoClasificado);
+                alert("¡Anuncio publicado correctamente!");
+                document.getElementById('formClasificado').reset();
+                cerrarModalClasificado();
+                verClasificados(); // Mostrar la lista de clasificados
+            } catch (err) {
+                console.error(err);
+                alert("Error al guardar en la nube.");
+            } finally {
+                btn.innerText = "Publicar en la Nube";
+                btn.disabled = false;
+            }
+        });
 
         function inicializarClima() {
             const row = document.getElementById('forecastRow');
