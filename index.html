@@ -4,116 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="7LocQrOasQukYtWCKFTH07w-oyvFua-yXgXsGRzAy4Q" />
-    <title>GuíaAca Pro - Directorio de Comercios Acapulco</title>
+    <title>GuíaAca Pro - Directorio de Comercios</title>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1151639786767658" crossorigin="anonymous"></script>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; color: #0f172a; scroll-behavior: smooth; }
         :root { --midnight-blue: #0f172a; --elegant-gold: #c5a059; --whatsapp-green: #25D366; --qr-brown: #8b5e3c; }
-        
-        .gradient-header { 
-            background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1589828914726-278438e35074?q=80&w=1920'); 
-            background-size: cover; 
-            background-position: center; 
-            min-height: 600px; 
-        }
-
-        .business-card, .ad-card-native { 
-            background: white; 
-            border-radius: 24px; 
-            border: 1px solid #e2e8f0; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            position: relative; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column; 
-            height: 100%;
-        }
-
-        .business-card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.1); 
-            border-color: var(--elegant-gold); 
-        }
-
-        .business-desc { 
-            font-size: 0.9rem; 
-            line-height: 1.6; 
-            color: #475569; 
-            min-height: 80px; 
-            margin-bottom: 1rem; 
-            display: -webkit-box; 
-            -webkit-line-clamp: 3; 
-            -webkit-box-orient: vertical; 
-            overflow: hidden; 
-        }
-
-        .comment-box { 
-            background: #f8fafc; 
-            border-radius: 12px; 
-            padding: 10px; 
-            margin-top: 8px; 
-            font-size: 0.8rem; 
-            border-left: 3px solid var(--elegant-gold); 
-        }
-
-        .btn-category { 
-            transition: all 0.3s ease; 
-            text-transform: uppercase; 
-            font-size: 0.65rem; 
-            font-weight: 800; 
-            letter-spacing: 1px; 
-            border-radius: 12px; 
-        }
-
-        .weather-badge { 
-            background: rgba(15, 23, 42, 0.6); 
-            backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 12px; 
-        }
-
-        .forecast-item { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            padding: 0 8px; 
-            border-right: 1px solid rgba(255,255,255,0.1); 
-        }
-
+        .gradient-header { background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7)), url('https://images.unsplash.com/photo-1589828914726-278438e35074?q=80&w=1920'); background-size: cover; background-position: center; min-height: 600px; }
+        .business-card, .ad-card-native { background: white; border-radius: 24px; border: 1px solid #e2e8f0; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+        .business-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -15px rgba(15, 23, 42, 0.1); border-color: var(--elegant-gold); }
+        .business-desc { font-size: 0.9rem; line-height: 1.6; color: #475569; min-height: 80px; margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .comment-box { background: #f8fafc; border-radius: 12px; padding: 10px; margin-top: 8px; font-size: 0.8rem; border-left: 3px solid var(--elegant-gold); }
+        .btn-category { transition: all 0.3s ease; text-transform: uppercase; font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; border-radius: 12px; }
+        .weather-badge { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; }
+        .forecast-item { display: flex; flex-direction: column; align-items: center; padding: 0 8px; border-right: 1px solid rgba(255,255,255,0.1); }
         .forecast-item:last-child { border-right: none; }
-
-        .visit-counter { 
-            background: rgba(197, 160, 89, 0.1); 
-            border: 1px solid var(--elegant-gold); 
-            color: var(--elegant-gold); 
-            padding: 4px 12px; 
-            border-radius: 20px; 
-            font-size: 10px; 
-            font-weight: 800; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 6px; 
-            margin-top: 15px; 
-        }
-
-        .port-popup { 
-            position: fixed; 
-            bottom: 20px; 
-            right: 20px; 
-            width: 300px; 
-            background: white; 
-            border-radius: 16px; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
-            z-index: 1000; 
-            border: 1px solid #e2e8f0; 
-        }
-
+        .visit-counter { background: rgba(197, 160, 89, 0.1); border: 1px solid var(--elegant-gold); color: var(--elegant-gold); padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-top: 15px; }
+        .port-popup { position: fixed; bottom: 20px; right: 20px; width: 300px; background: white; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); z-index: 1000; transition: all 0.3s ease; border: 1px solid #e2e8f0; }
         .port-popup-content { padding: 15px; position: relative; }
         .close-popup { position: absolute; top: 5px; right: 10px; font-size: 20px; cursor: pointer; color: #94a3b8; }
         .flag-icon { width: 24px; height: 16px; border-radius: 2px; display: inline-block; vertical-align: middle; margin-right: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
@@ -125,11 +36,11 @@
         <div class="port-popup-content">
             <span class="close-popup" onclick="this.parentElement.parentElement.style.display='none'">×</span>
             <div class="flex items-center gap-2 mb-3">
-                <div id="banderaCapitania" class="flag-icon" style="background: blue;"></div>
+                <div id="banderaCapitania" class="flag-icon"></div>
                 <p class="font-black uppercase text-[10px] text-slate-900 tracking-wider">Capitanía de Puerto</p>
             </div>
             <p id="tideReport" class="text-[11px] leading-tight text-slate-600">
-                Estado: <strong id="tideStatus">Marea Normal</strong><br>
+                Estado: <strong id="tideStatus">Marea Baja</strong><br>
                 Clima Marítimo: <span id="climaMaritimo">Buenas condiciones</span><br>
                 <strong>Puerto Abierto</strong> a navegación.
             </p>
@@ -139,9 +50,7 @@
     <div id="modalQR" class="fixed inset-0 z-[500] hidden flex items-center justify-center p-6 bg-slate-900/95 backdrop-blur-md">
         <div class="bg-white w-full max-w-xs rounded-[2rem] p-10 text-center shadow-2xl text-black">
             <h3 id="qrNombre" class="text-xl font-bold mb-4 uppercase">Negocio</h3>
-            <div class="bg-slate-50 p-4 rounded-2xl mb-8">
-                <img id="qrImagen" src="" alt="QR" class="w-44 h-44 mx-auto">
-            </div>
+            <div class="bg-slate-50 p-4 rounded-2xl mb-8"><img id="qrImagen" src="" alt="QR" class="w-44 h-44 mx-auto"></div>
             <button onclick="cerrarQR()" class="w-full py-4 bg-slate-900 text-white rounded-xl font-bold uppercase tracking-widest">Cerrar</button>
         </div>
     </div>
@@ -174,49 +83,87 @@
     </nav>
 
     <header class="gradient-header flex flex-col items-center justify-center px-6 py-12 text-center text-white relative">
-        <div id="weatherContainer" class="weather-badge flex items-center gap-2 px-4 py-3 mb-8 mx-auto">
+        <div id="weatherContainer" class="weather-badge flex items-center gap-2 px-4 py-3 mb-8 mx-auto overflow-x-auto max-w-full">
             <div class="flex items-center gap-2 pr-4 border-r border-white/20">
                 <i class="fas fa-calendar-day text-amber-400 text-xs"></i>
-                <p id="fechaText" class="text-[9px] font-bold uppercase whitespace-nowrap italic">Cargando...</p>
+                <p id="fechaText" class="text-[9px] font-bold uppercase whitespace-nowrap">Cargando...</p>
             </div>
             <div id="forecastRow" class="flex gap-4"></div>
         </div>
 
-        <h1 class="text-4xl md:text-6xl font-extrabold mb-10 italic uppercase drop-shadow-2xl text-white">Directorio <span class="text-amber-400">Inteligente</span> Acapulco</h1>
+        <h1 class="text-4xl md:text-6xl font-extrabold mb-10 italic uppercase drop-shadow-2xl">Directorio <span class="text-amber-400">Inteligente</span> Acapulco</h1>
 
         <div class="relative w-full max-w-5xl mx-auto mb-6 text-black px-4">
             <input type="text" id="inputBusqueda" placeholder="Busca oficios, comida, zonas o servicios en Acapulco..." 
-                   class="w-full py-6 px-16 rounded-2xl bg-white text-slate-900 shadow-2xl outline-none focus:ring-4 focus:ring-blue-500/30 text-lg md:text-xl font-medium">
+                   class="w-full py-6 px-16 rounded-2xl bg-white text-slate-900 shadow-2xl outline-none focus:ring-4 focus:ring-blue-500/30 text-lg md:text-xl font-medium placeholder:text-slate-400">
             <i class="fas fa-search absolute left-10 top-1/2 -translate-y-1/2 text-slate-400 text-2xl"></i>
         </div>
 
+        <div class="max-w-5xl mx-auto mb-8 w-full overflow-hidden min-h-[90px]">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1151639786767658"
+                 data-ad-slot="auto"
+                 data-ad-format="horizontal"
+                 data-full-width-responsive="true"></ins>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+
         <div class="flex flex-wrap justify-center gap-3 mb-10 max-w-5xl mx-auto">
-            <button onclick="filtrarPorCategoria('Asesoría Contable')" class="btn-category px-5 py-3 bg-blue-700 text-white shadow-lg">📑 Contabilidad</button>
-            <button onclick="filtrarPorCategoria('Gastronomía')" class="btn-category px-5 py-3 bg-orange-500 text-white shadow-lg">🥘 Comida</button>
-            <button onclick="filtrarPorCategoria('Turismo')" class="btn-category px-5 py-3 bg-teal-600 text-white shadow-lg">🏝️ Turismo</button>
-            <button onclick="filtrarPorCategoria('Comercio')" class="btn-category px-5 py-3 bg-slate-700 text-white shadow-lg">🛍️ Comercios</button>
-            <button onclick="filtrarPorCategoria('Decoración')" class="btn-category px-5 py-3 bg-rose-500 text-white shadow-lg">🎈 Eventos</button>
+            <button onclick="filtrarPorCategoria('Asesoría Contable')" class="btn-category px-5 py-3 bg-blue-700 text-white shadow-lg hover:bg-blue-800">📑 Contabilidad/Fiscal</button>
+            <button onclick="filtrarPorCategoria('Gastronomía')" class="btn-category px-5 py-3 bg-orange-500 text-white shadow-lg hover:bg-orange-600">🥘 Comida/Foodies</button>
+            <button onclick="filtrarPorCategoria('Turismo')" class="btn-category px-5 py-3 bg-teal-600 text-white shadow-lg hover:bg-teal-700">🏝️ Hoteles/Turismo</button>
+            <button onclick="filtrarPorCategoria('Comercio')" class="btn-category px-5 py-3 bg-slate-700 text-white shadow-lg hover:bg-slate-800">🛍️ Comercios Locales</button>
+            <button onclick="filtrarPorCategoria('Decoración y Eventos')" class="btn-category px-5 py-3 bg-rose-500 text-white shadow-lg hover:bg-rose-600">🎈 Eventos/Decoraciones</button>
             <button onclick="abrirModalClasificado()" class="btn-category px-5 py-3 bg-purple-700 text-white animate-pulse shadow-lg"><i class="fas fa-plus mr-2"></i> Nuevo Clasificado</button>
         </div>
 
         <div class="flex justify-center gap-4">
-            <button onclick="mostrarNegocios(negocios, 'Resultados Destacados')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-3 rounded-xl font-bold text-[10px] uppercase transition-all">Ver Todo</button>
+            <button onclick="mostrarNegocios(negocios, 'Resultados Destacados')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 px-8 py-3 rounded-xl font-bold text-[10px] uppercase transition-all">Ver Todo el Directorio</button>
             <button onclick="verClasificados()" class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-xl font-bold text-[10px] uppercase shadow-lg transition-all"><i class="fas fa-bullhorn mr-2"></i> Ver Clasificados</button>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto -mt-16 px-8 pb-20 relative z-20">
-        <div class="flex justify-between items-center mb-12">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
             <h2 id="currentFilterText" class="bg-slate-900 text-white px-10 py-3 rounded-xl shadow-2xl text-[10px] font-black uppercase tracking-[3px] italic">Resultados Destacados</h2>
+            <div class="flex flex-wrap justify-center gap-3">
+                <button onclick="window.open('img/mapa.jpg', '_blank')" class="px-6 py-3 bg-sky-700 text-white rounded-xl font-bold text-[9px] uppercase shadow-lg flex items-center gap-2"><i class="fas fa-map"></i> Mapa Turístico</button>
+                <button onclick="window.open('https://www.google.com/maps/d/u/0/edit?mid=1U2JhlxltjjMdVSRIo4z-qBmIHlv3UPc&usp=sharing', '_blank')" class="px-6 py-3 bg-amber-500 text-black rounded-xl font-bold text-[9px] uppercase shadow-lg flex items-center gap-2"><i class="fas fa-location-dot"></i> Playas y Sitios</button>
+            </div>
         </div>
         <div id="contenedorNegocios" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
     </main>
 
-    <footer class="bg-slate-950 py-16 text-center border-t-4 border-amber-500 text-white">
+    <section class="max-w-7xl mx-auto px-8 mb-24 text-black">
+        <div class="bg-white p-12 rounded-[2rem] border-t-4 border-[#c5a059] shadow-sm">
+            <h3 class="text-2xl font-black text-slate-900 uppercase tracking-tight mb-8">Políticas de Privacidad y Aviso Académico</h3>
+            <div class="grid md:grid-cols-2 gap-12 text-sm leading-relaxed mb-12">
+                <div>
+                    <p class="font-bold uppercase tracking-wider text-xs border-b pb-2 mb-4 text-slate-900">Propósito de Investigación</p>
+                    <p class="italic">Este sitio web opera específicamente dentro de la ciudad y puerto de Acapulco de Juárez, Guerrero. Los datos se utilizan para fomentar la vinculación comercial local.</p>
+                </div>
+                <div>
+                    <p class="font-bold uppercase tracking-wider text-xs border-b pb-2 mb-4 text-slate-900">Manejo de Datos</p>
+                    <p>La información es proporcionada voluntariamente. Usted puede solicitar la baja de su registro escribiendo al soporte oficial: <strong>aca.soportepc@gmail.com</strong></p>
+                </div>
+            </div>
+            <div class="bg-slate-50 p-6 rounded-2xl border flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center text-white"><i class="fas fa-envelope text-xs"></i></div>
+                    <div><h4 class="font-black text-xs uppercase">Soporte Técnico</h4><p class="text-[10px] text-slate-500">aca.soportepc@gmail.com</p></div>
+                </div>
+                <a href="mailto:aca.soportepc@gmail.com" class="bg-slate-900 text-white px-6 py-3 rounded-xl font-bold text-[10px] uppercase shadow-md hover:bg-blue-800 transition-all">Enviar Correo</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-950 py-12 text-center border-t-4 border-amber-500 text-white">
         <p class="font-bold text-xs uppercase tracking-[4px] mb-2">© 2026 Directorio de Comercios en Acapulco</p>
-        <p class="text-slate-500 text-[9px] uppercase font-bold mb-6 italic">Proyecto de Tesis Profesional - Acapulco, Guerrero</p>
+        <p class="text-slate-500 text-[9px] uppercase font-bold mb-4">Proyecto de Tesis Profesional - Acapulco, Guerrero</p>
+        
         <div class="visit-counter">
-            <i class="fas fa-eye text-amber-500"></i>
+            <i class="fas fa-eye"></i>
             <span>VISITAS: <span id="count">000000</span></span>
         </div>
     </footer>
@@ -237,138 +184,198 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         
-        window.db = db; window.collection = collection; window.addDoc = addDoc;
+        window.db = db; 
+        window.collection = collection; 
+        window.addDoc = addDoc;
 
         onSnapshot(query(collection(db, "comentarios"), orderBy("fecha", "asc")), (snap) => {
-            let temp = {};
+            let tempComms = {};
             snap.forEach(doc => {
-                const d = doc.data();
-                if (!temp[d.negocioId]) temp[d.negocioId] = [];
-                temp[d.negocioId].push(d);
+                const data = doc.data();
+                if (!tempComms[data.negocioId]) tempComms[data.negocioId] = [];
+                tempComms[data.negocioId].push(data);
             });
-            window.comentariosDB = temp;
+            window.comentariosDB = tempComms;
             if(window.mostrarNegocios) window.mostrarNegocios(window.negociosActuales || window.negocios, document.getElementById('currentFilterText').innerText);
         });
 
         onSnapshot(query(collection(db, "clasificados"), orderBy("fecha", "desc")), (snap) => {
             window.listaClasificadosRealTime = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
-            if(document.getElementById('currentFilterText').innerText === "CLASIFICADOS ACTUALIZADOS") {
+            // Si el usuario está viendo los clasificados, actualiza la vista inmediatamente
+            if(document.getElementById('currentFilterText').innerText === "Clasificados Actualizados") {
                 window.verClasificados();
             }
         });
     </script>
 
-    <script>
+    <script>        
         const negocios = [
-            { nombre: "Decoraciones Ana Lizbeth", categoria: "Decoración", descripcion: "Globos y eventos sociales.", zona: "Colosio Acapulco", tel: "7442211689", img: "img/analizbeth.jpg" },
-            { nombre: "Papelería Paty", categoria: "Comercio", descripcion: "Papelería e impresiones.", zona: "Granjas del Marqués Acapulco", tel: "7444433601", img: "img/papepaty.jpg" },
-            { nombre: "Papeleria Confi", categoria: "Comercio", descripcion: "Copias y artículos escolares.", zona: "Granjas del Marqués Acapulco", tel: "7444296350", img: "img/papeconfi.jpg" },
-            { nombre: "Asesorias Contables", categoria: "Asesoría Contable", descripcion: "Trámites SAT y contabilidad.", zona: "Centro Acapulco", tel: "7445315790", img: "img/contable.jpg" },
-            { nombre: "Hotel Villas La Lupita", categoria: "Turismo", descripcion: "Hotel familiar cerca de la playa.", zona: "Magallanes Acapulco", tel: "7443508253", img: "img/hvlupita.jpg" },
-            { nombre: "Impacto Creativo Bazar", categoria: "Decoración", descripcion: "Colectivo de emprendedores.", zona: "Hornos Acapulco", tel: "7443257893", img: "img/bimpacto.jpg" },
-            { nombre: "Bazar Bahía", categoria: "Decoración", descripcion: "Espacio para emprendedores.", zona: "Deportivo Acapulco", tel: "7442755838", img: "img/bbahia.jpg" }
+            { id: 1, nombre: "Decoraciones Ana Lizbeth", categoria: "Decoración y Eventos Sociales", descripcion: "Globos, eventos sociales, desayunos sorpresa.", zona: "Rinconada Luis Donaldo Colosio", tel: "7442211689", img: "img/analizbeth.jpg" },
+            { id: 2, nombre: "Papelería Paty", categoria: "Comercio", descripcion: "Artículos de papelería, impresiones, copias.", zona: "Granjas del Marqués", tel: "7444433601", img: "img/papepaty.jpg" },
+            { nombre: "Papeleria Confi", categoria: "Comercio", descripcion: "venta de articulos de papeleria y escolar , copias, impresiones, escaneos.", zona: "Mártires de La Democracia S/N, Granjas del Marqués, 39890 Acapulco de Juárez, Gro.", tel: "7444296350", img: "img/papeconfi.jpg", social: "", rating: "5", oferta: "" },
+            { nombre: "Peluqueria mercado de la Colosio", categoria: "Comercio", descripcion: "cortes de cabello.", zona: "Mártires de La Democracia, Granjas del Marqués, 39890 Acapulco de Juárez, Gro.", tel: "0", img: "img/peluquero.jpg", social: "", rating: "4", oferta: "" },
+            { nombre: "Venta de jugo de naranja fresca", categoria: "Gastronomia", descripcion: "venta de jugo de naranja en bolsa o vaso sobre el camellon en la av. principal ", zona: "Luis Donaldo Colosio, Granjas del Marqués, 39890 Acapulco de Juárez, Gro.", tel: "0", img: "img/jugos.jpg", social: "", rating: "5", oferta: "" },
+            { nombre: "Asesorias Contables ", categoria: "Asesoría Contable", descripcion: "Ayudar a las personas con trámites ante el SAT , declaración de impuestos y la contabilidad de sus negocios.", zona: "Juan Ruiz de Alarcón 8, Pozo de la Nacion, 39300 Acapulco de Juárez, Gro.", tel: "7445315790", img: "img/contable.jpg", social: "No, solo contacto por WhatsApp", rating: "5", oferta: "" },
+            { nombre: "Hotel Villas La Lupita", categoria: "Hoteles y Turismo", descripcion: "Hotel familiar, habitaciones con todos los servicios a/c, ventilador, T.V con cable, estacionamiento, a una cuadra de la costera y zona de playas.", zona: "Anton de Alaminos #232 Fraccionamiento Magallanes, Acapulco, Mexico, 39670", tel: "+5217443508253", img: "img/hvlupita.jpg", social: "Facebook", rating: "5", oferta: "" },
+            { nombre: "Mishol Hotel & Beach Club", categoria: "Hoteles y Turismo", descripcion: "Ubicado en la carretera rumbo a Barra Vieja, su playa casi exclusiva para sus húspedes lo apunta como una opción para el descanso y la diversión en Familia.", zona: "Carretera Barra Vieja Km 29, Acapulco, Mexico, 39893", tel: "+527442399010", img: "img/hmishol.jpg", social: "Facebook, Instagram, Sitio Web", rating: "5", oferta: "" },
+            { nombre: "Hotel Playa Suites Acapulco", categoria: "Hoteles y Turismo", descripcion: "488 Suites con vista al mar, a 150 metros de la Diana en Acapulco, Gro.", zona: "Av. Costera Miguel Alemán #123, Acapulco, Mexico, 39670", tel: "5217441768321", img: "img/hplayasuites.jpg", social: "Facebook, Instagram, Sitio Web", rating: "5", oferta: "" },
+            { nombre: "Hotel Marzol", categoria: "Hoteles y Turismo", descripcion: "Es un hotel de playa 4 estrellas, de diseño moderno en la Zona Dorada", zona: "Calle Francia 1-A , Acapulco de Juárez Centro, Mexico, 39690", tel: "5215571967561", img: "img/hmarzol.jpg", social: "Facebook, Sitio Web, No, solo contacto por WhatsApp", rating: "4", oferta: "" },
+            { nombre: "Hotel Amares Acapulco", categoria: "Hoteles y Turismo", descripcion: "Antes Hotel Calinda ubicado en la zona costera.", zona: "Costera Miguel Alem\u00E1n 1260 Fraccionamiento Club Deportivo, 39690 Acapulco, Acapulco, Mexico, 39690", tel: "+5215552749264", img: "img/hamarea.jpg", social: "Facebook, Sitio Web, No, solo contacto por WhatsApp", rating: "4", oferta: "" },
+            { nombre: "Hotel Real Bananas", categoria: "Hoteles y Turismo", descripcion: "Todo Incluido Familiar 4 Estrellas, con 134 cómodas habitaciones, ubicado en la zona Dorada atrás del Club de Golf.", zona: "Av. Monterrey No. 195, Fracc. Club Deportivo, Acapulco, Mexico, 39690", tel: "+5217441937424", img: "img/hbananas.jpg", social: "Facebook, Sitio Web, No, solo contacto por WhatsApp", rating: "4", oferta: "" },
+            { nombre: "Impacto Creativo Bazar", categoria: "Decoración y Eventos Sociales", descripcion: "Somos un colectivo de jóvenes emprendedores liderados por la creatividad, el amor y la alegría para cumplir nuestras metas.", zona: "Av Costera Miguel Alemán 249, Hornos, 39355 Acapulco de Juárez, Gro.", tel: "7443257893", img: "img/bimpacto.jpg" },
+            { nombre: "Bazar Bahía", categoria: "Decoración y Eventos Sociales", descripcion: "Si tienes un emprendimiento, este es el espacio ideal para darlo a conocer, conectar con nuevos clientes y hacer crecer tu marca.", zona: "Av Costera Miguel Alemán s/n, Deportivo, 39690 Acapulco de Juárez, Gro.", tel: "7442755838", img: "img/bbahia.jpg" }
         ];
 
         window.negocios = negocios;
-        window.comentariosDB = {};
         let usuarioLogueado = null;
+        window.comentariosDB = {};
+
+        function simularLogin() {
+            usuarioLogueado = { nombre: "Usuario Acapulco Pro" };
+            document.getElementById('loginBtn').innerHTML = `<i class="fas fa-user-check mr-2"></i> ${usuarioLogueado.nombre}`;
+            alert("Has accedido con Google.");
+        }
+
+        async function agregarComentario(negocioId) {
+            if (!usuarioLogueado) { alert("Accede primero para comentar."); return; }
+            const input = document.getElementById(`input-${negocioId}`);
+            if (!input.value.trim()) return;
+            try { 
+                await window.addDoc(window.collection(window.db, "comentarios"), { 
+                    negocioId, autor: usuarioLogueado.nombre, texto: input.value, fecha: new Date() 
+                }); 
+                input.value = ""; 
+            } catch (e) { console.error(e); }
+        }
 
         function mostrarNegocios(lista, label = "Resultados") {
             window.negociosActuales = lista;
             const contenedor = document.getElementById('contenedorNegocios');
             contenedor.innerHTML = '';
-            document.getElementById('currentFilterText').innerText = label.toUpperCase();
+            document.getElementById('currentFilterText').innerText = label;
+            
+            const esClasificado = label.toLowerCase().includes("clasificado");
 
             lista.forEach((n, index) => {
-                const idU = n.id || n.nombre;
-                const comms = window.comentariosDB[idU] || [];
-                const hasTel = n.tel && n.tel !== "0";
+                const idUnico = n.id || n.nombre;
+                const listadoComms = window.comentariosDB[idUnico] || [];
+                const hasWA = n.tel && n.tel !== "0";
                 
-                // URL DE MAPAS ACTUALIZADA Y SEGURA (No genera 404)
-                const queryMapa = encodeURIComponent(`${n.nombre} ${n.zona}`);
+                const queryMapa = encodeURIComponent(`${n.nombre} ${n.zona} Acapulco`);
                 const mapUrl = `https://www.google.com/maps/search/?api=1&query=${queryMapa}`;
+
+                let botonesHTML = esClasificado ? `
+                    <div class="flex justify-center mb-4 text-white">
+                        ${hasWA ? `<a href="https://wa.me/52${n.tel}" target="_blank" class="bg-[#25D366] py-3 rounded-lg font-bold text-[10px] text-center uppercase shadow-sm w-full"><i class="fab fa-whatsapp mr-2"></i> WhatsApp</a>` : '<span class="bg-slate-100 text-slate-400 py-3 rounded-lg font-bold text-[10px] text-center w-full">Sin Tel</span>'}
+                    </div>` : `
+                    <div class="grid grid-cols-3 gap-2 mb-4 text-white">
+                        ${hasWA ? `<a href="https://wa.me/52${n.tel}" target="_blank" class="bg-[#25D366] py-2 rounded-lg font-bold text-[9px] text-center uppercase shadow-sm">WhatsApp</a>` : '<span class="bg-slate-100 text-slate-400 py-2 rounded-lg font-bold text-[9px] text-center">Sin Tel</span>'}
+                        <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-[#8b5e3c] py-2 rounded-lg font-bold text-[9px] uppercase">QR</button>
+                        <a href="${mapUrl}" target="_blank" class="bg-blue-600 py-2 rounded-lg font-bold text-[9px] text-center uppercase shadow-sm"><i class="fas fa-location-dot"></i> Mapa</a>
+                    </div>`;
 
                 contenedor.innerHTML += `
                     <article class="business-card text-black">
-                        <img src="${n.img || 'https://via.placeholder.com/400'}" class="h-48 w-full object-cover">
+                        <div class="h-48 overflow-hidden bg-slate-100"><img src="${n.img}" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=400'"></div>
                         <div class="p-6 flex flex-col flex-grow bg-white">
-                            <span class="text-[8px] font-bold uppercase text-blue-600 bg-blue-50 px-2 py-1 rounded w-fit mb-3">${n.categoria}</span>
+                            <span class="text-[8px] font-bold uppercase text-slate-500 bg-slate-100 px-2 py-1 rounded w-fit mb-3">${n.categoria || 'Servicio'}</span>
                             <h3 class="text-lg font-extrabold mb-2 uppercase leading-tight">${n.nombre}</h3>
                             <p class="business-desc italic">${n.descripcion || n.oficio || ''}</p>
-                            <div class="flex items-center gap-2 text-slate-400 text-[10px] mb-4"><i class="fas fa-map-marker-alt text-amber-600"></i> ${n.zona || 'Acapulco'}</div>
+                            <div class="flex items-center gap-2 text-slate-400 text-[10px] mb-4"><i class="fas fa-map-marker-alt text-amber-600"></i><span>${n.zona || 'Acapulco'}</span></div>
                             
-                            <div class="grid grid-cols-3 gap-2 mb-4">
-                                ${hasTel ? `<a href="https://wa.me/52${n.tel}" target="_blank" class="bg-[#25D366] text-white py-2 rounded-lg text-center text-[9px] font-bold uppercase">WhatsApp</a>` : '<span class="bg-slate-50 text-slate-300 py-2 rounded-lg text-center text-[9px]">N/A</span>'}
-                                <button onclick="generarQR('${n.tel}', '${n.nombre}')" class="bg-[#8b5e3c] text-white py-2 rounded-lg text-[9px] font-bold uppercase">QR</button>
-                                <a href="${mapUrl}" target="_blank" class="bg-blue-600 text-white py-2 rounded-lg text-center text-[9px] font-bold uppercase">Mapa</a>
-                            </div>
+                            ${botonesHTML}
 
                             <div class="mt-auto border-t pt-4">
-                                <div class="max-h-24 overflow-y-auto mb-3">
-                                    ${comms.map(c => `<div class="comment-box"><strong>${c.autor}:</strong> ${c.texto}</div>`).join('')}
+                                <div id="comments-${idUnico}" class="max-h-32 overflow-y-auto mb-3">
+                                    ${listadoComms.map(c => `<div class="comment-box"><strong>${c.autor}:</strong> ${c.texto}</div>`).join('')}
                                 </div>
                                 <div class="flex gap-2">
-                                    <input type="text" id="in-${idU}" placeholder="Comentar..." class="flex-grow p-2 text-[10px] border rounded-lg outline-none">
-                                    <button onclick="agregarComentario('${idU}')" class="bg-slate-900 text-white px-3 rounded-lg"><i class="fas fa-paper-plane text-[10px]"></i></button>
+                                    <input type="text" id="input-${idUnico}" placeholder="Escribe un comentario..." class="flex-grow p-2 text-[10px] border rounded-lg outline-none">
+                                    <button onclick="agregarComentario('${idUnico}')" class="bg-slate-900 text-white px-3 rounded-lg"><i class="fas fa-paper-plane text-[10px]"></i></button>
                                 </div>
                             </div>
                         </div>
                     </article>`;
+
+                if ((index + 1) % 3 === 0) {
+                    contenedor.innerHTML += `
+                        <article class="ad-card-native p-4 flex items-center justify-center min-h-[350px]">
+                            <ins class="adsbygoogle" style="display:block; width:100%" data-ad-format="fluid" data-ad-layout-key="-fb+5w+4e-db+86" data-ad-client="ca-pub-1151639786767658" data-ad-slot="auto"></ins>
+                            <script>(adsbygoogle = window.adsbygoogle || []).push({});<\/script>
+                        </article>`;
+                }
             });
         }
 
-        async function agregarComentario(id) {
-            if (!usuarioLogueado) { alert("Accede para comentar."); return; }
-            const inp = document.getElementById(`in-${id}`);
-            if (!inp.value.trim()) return;
-            await window.addDoc(window.collection(window.db, "comentarios"), {
-                negocioId: id, autor: usuarioLogueado.nombre, texto: inp.value, fecha: new Date()
-            });
-            inp.value = "";
-        }
-
+        // --- LÓGICA PARA GUARDAR EN FIREBASE ---
         document.getElementById('formClasificado').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnPublicar');
-            btn.innerText = "Publicando..."; btn.disabled = true;
+            btn.innerText = "Publicando...";
+            btn.disabled = true;
+
+            const nuevoClasificado = {
+                nombre: document.getElementById('claNombre').value,
+                oficio: document.getElementById('claOficio').value,
+                descripcion: document.getElementById('claDesc').value,
+                tel: document.getElementById('claTel').value,
+                categoria: "Clasificado",
+                zona: "Acapulco, Gro.",
+                fecha: new Date(),
+                img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=400"
+            };
+
             try {
-                await window.addDoc(window.collection(window.db, "clasificados"), {
-                    nombre: document.getElementById('claNombre').value,
-                    oficio: document.getElementById('claOficio').value,
-                    descripcion: document.getElementById('claDesc').value,
-                    tel: document.getElementById('claTel').value,
-                    categoria: "CLASIFICADO", zona: "Acapulco", fecha: new Date(),
-                    img: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=400"
-                });
-                alert("Anuncio en la nube con éxito.");
+                await window.addDoc(window.collection(window.db, "clasificados"), nuevoClasificado);
+                alert("¡Anuncio publicado correctamente!");
+                document.getElementById('formClasificado').reset();
                 cerrarModalClasificado();
-            } catch (err) { console.error(err); }
-            btn.innerText = "Publicar en la Nube"; btn.disabled = false;
+                verClasificados(); // Mostrar la lista de clasificados
+            } catch (err) {
+                console.error(err);
+                alert("Error al guardar en la nube.");
+            } finally {
+                btn.innerText = "Publicar en la Nube";
+                btn.disabled = false;
+            }
         });
+
+        function inicializarClima() {
+            const row = document.getElementById('forecastRow');
+            const hoy = new Date();
+            const pronosticoReal = [{ icon: 'fa-sun text-amber-400', temp: '29' }, { icon: 'fa-sun text-amber-400', temp: '30' }, { icon: 'fa-cloud text-blue-400', temp: '29' }];
+            row.innerHTML = pronosticoReal.map((f, i) => {
+                const d = new Date(); d.setDate(hoy.getDate() + i);
+                return `<div class="forecast-item"><span class="text-[7px] font-black uppercase opacity-70">${i === 0 ? 'Hoy' : d.toLocaleDateString('es-MX', {weekday: 'short'})}</span><i class="fas ${f.icon} text-[10px] my-1"></i><span class="text-[8px] font-bold">${f.temp}°C</span></div>`;
+            }).join('');
+            document.getElementById('banderaCapitania').style.background = 'blue';
+            document.getElementById('fechaText').innerText = hoy.toLocaleDateString('es-MX', { day: 'numeric', month: 'short' });
+        }
+
+        async function gestionarContador() {
+            const key = "guiaaca_pro_v_2026_v2";
+            let count = localStorage.getItem(key) || 0;
+            count = parseInt(count) + 1;
+            localStorage.setItem(key, count);
+            document.getElementById('count').innerText = count.toString().padStart(6, '0');
+        }
 
         document.getElementById('inputBusqueda').addEventListener('input', (e) => {
             const b = e.target.value.toLowerCase();
-            const combinada = [...negocios, ...(window.listaClasificadosRealTime || [])];
-            const res = combinada.filter(n => `${n.nombre} ${n.descripcion || ''} ${n.categoria || ''} ${n.oficio || ''}`.toLowerCase().includes(b));
-            mostrarNegocios(res, b === "" ? 'Resultados Destacados' : `Buscando: "${b}" (${res.length})`);
+            const res = negocios.filter(n => `${n.nombre} ${n.descripcion} ${n.categoria}`.toLowerCase().includes(b));
+            mostrarNegocios(res, `Buscando: "${b}"`);
         });
 
         window.filtrarPorCategoria = (c) => mostrarNegocios(negocios.filter(n => n.categoria.toLowerCase().includes(c.toLowerCase())), c);
         window.abrirModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.remove('hidden');
         window.cerrarModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.add('hidden');
         window.verClasificados = () => mostrarNegocios(window.listaClasificadosRealTime || [], "Clasificados Actualizados");
-        window.simularLogin = () => { usuarioLogueado = {nombre: "Usuario Aca"}; document.getElementById('loginBtn').innerText = "CONECTADO"; };
-        
-        function generarQR(t, n) { 
-            document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://wa.me/52${t}`;
-            document.getElementById('qrNombre').innerText = n;
-            document.getElementById('modalQR').classList.remove('hidden');
-        }
-        window.cerrarQR = () => document.getElementById('modalQR').classList.add('hidden');
+        function generarQR(t, n) { document.getElementById('qrImagen').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent('https://wa.me/52'+t)}`; document.getElementById('qrNombre').innerText = n; document.getElementById('modalQR').classList.remove('hidden'); }
+        function cerrarQR() { document.getElementById('modalQR').classList.add('hidden'); }
 
-        document.getElementById('fechaText').innerText = new Date().toLocaleDateString('es-MX', {day:'numeric', month:'short'});
-        document.getElementById('count').innerText = Math.floor(Math.random()*100).toString().padStart(6, '0');
-        mostrarNegocios(negocios);
+        inicializarClima();
+        gestionarContador();
+        mostrarNegocios(negocios, 'Resultados Destacados');
     </script>
 </body>
 </html>
