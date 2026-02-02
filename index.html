@@ -201,7 +201,6 @@
 
         onSnapshot(query(collection(db, "clasificados"), orderBy("fecha", "desc")), (snap) => {
             window.listaClasificadosRealTime = snap.docs.map(doc => ({id: doc.id, ...doc.data()}));
-            // Si el usuario está viendo los clasificados, actualiza la vista inmediatamente
             if(document.getElementById('currentFilterText').innerText === "Clasificados Actualizados") {
                 window.verClasificados();
             }
@@ -252,15 +251,14 @@
             contenedor.innerHTML = '';
             document.getElementById('currentFilterText').innerText = label;
             
-            const esClasificado = label.toLowerCase().includes("clasificado");
-
             lista.forEach((n, index) => {
                 const idUnico = n.id || n.nombre;
                 const listadoComms = window.comentariosDB[idUnico] || [];
                 const hasWA = n.tel && n.tel !== "0";
+                const esClasificado = (n.categoria === "Clasificado");
                 
                 const queryMapa = encodeURIComponent(`${n.nombre} ${n.zona} Acapulco`);
-                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${queryMapa}`;
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=$${queryMapa}`;
 
                 let botonesHTML = esClasificado ? `
                     <div class="flex justify-center mb-4 text-white">
@@ -305,7 +303,6 @@
             });
         }
 
-        // --- LÓGICA PARA GUARDAR EN FIREBASE ---
         document.getElementById('formClasificado').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('btnPublicar');
@@ -328,7 +325,7 @@
                 alert("¡Anuncio publicado correctamente!");
                 document.getElementById('formClasificado').reset();
                 cerrarModalClasificado();
-                verClasificados(); // Mostrar la lista de clasificados
+                verClasificados();
             } catch (err) {
                 console.error(err);
                 alert("Error al guardar en la nube.");
@@ -358,9 +355,14 @@
             document.getElementById('count').innerText = count.toString().padStart(6, '0');
         }
 
+        // --- LÓGICA DE BÚSQUEDA ACTUALIZADA (Combina negocios y clasificados) ---
         document.getElementById('inputBusqueda').addEventListener('input', (e) => {
             const b = e.target.value.toLowerCase();
-            const res = negocios.filter(n => `${n.nombre} ${n.descripcion} ${n.categoria}`.toLowerCase().includes(b));
+            const listaCombinada = [...negocios, ...(window.listaClasificadosRealTime || [])];
+            
+            const res = listaCombinada.filter(n => 
+                `${n.nombre} ${n.descripcion || ''} ${n.categoria || ''} ${n.oficio || ''}`.toLowerCase().includes(b)
+            );
             mostrarNegocios(res, `Buscando: "${b}"`);
         });
 
@@ -377,6 +379,7 @@
     </script>
 </body>
 </html>
+
 
 
 
