@@ -360,11 +360,39 @@
             document.getElementById('count').innerText = count.toString().padStart(6, '0');
         }
 
-        document.getElementById('inputBusqueda').addEventListener('input', (e) => {
-            const b = e.target.value.toLowerCase();
-            const res = negocios.filter(n => `${n.nombre} ${n.descripcion} ${n.categoria}`.toLowerCase().includes(b));
-            mostrarNegocios(res, `Buscando: "${b}"`);
-        });
+        // --- LÓGICA DE BÚSQUEDA UNIVERSAL (Negocios + Clasificados) ---
+document.getElementById('inputBusqueda').addEventListener('input', (e) => {
+    const termino = e.target.value.toLowerCase();
+    
+    // 1. Combinamos los negocios estáticos con los clasificados de la base de datos
+    const listaCombinada = [
+        ...negociosBase, 
+        ...(window.listaClasificadosRealTime || [])
+    ];
+    
+    // 2. Filtramos en ambas listas al mismo tiempo
+    const resultados = listaCombinada.filter(n => {
+        // Buscamos en nombre, descripción, categoría y oficio (para clasificados)
+        const nombre = (n.nombre || "").toLowerCase();
+        const desc = (n.descripcion || "").toLowerCase();
+        const cat = (n.categoria || "").toLowerCase();
+        const oficio = (n.oficio || "").toLowerCase(); // Específico de clasificados
+        const zona = (n.zona || "").toLowerCase();
+
+        return nombre.includes(termino) || 
+               desc.includes(termino) || 
+               cat.includes(termino) || 
+               oficio.includes(termino) ||
+               zona.includes(termino);
+    });
+
+    // 3. Mostramos los resultados
+    if (termino === "") {
+        mostrarNegocios(negociosBase, "Resultados Destacados");
+    } else {
+        mostrarNegocios(resultados, `Buscando: "${termino}" (${resultados.length})`);
+    }
+});
 
         window.filtrarPorCategoria = (c) => mostrarNegocios(negocios.filter(n => n.categoria.toLowerCase().includes(c.toLowerCase())), c);
         window.abrirModalClasificado = () => document.getElementById('modalNuevoClasificado').classList.remove('hidden');
@@ -379,6 +407,7 @@
     </script>
 </body>
 </html>
+
 
 
 
